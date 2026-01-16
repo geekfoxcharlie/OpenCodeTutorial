@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>实战技巧：Plan 与 Build - OpenCode 中文指南</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../assets/custom.css" />
+  </head>
+  <body class="bg-white">
+    <!-- Mobile Header -->
+    <div
+      class="md:hidden bg-slate-50 border-b border-slate-200 p-4 flex justify-between items-center"
+    >
+      <a href="../index.html" class="font-bold text-indigo-600"
+        >OpenCode Guide</a
+      >
+      <button
+        id="menuBtn"
+        class="p-2 text-slate-600 hover:bg-slate-200 rounded"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <div class="flex min-h-screen">
+      <!-- Sidebar -->
+      <aside
+        id="sidebar"
+        class="w-64 border-r border-slate-200 bg-slate-50 fixed inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 md:relative transition-transform duration-300"
+      >
+        <div class="p-6 sticky top-0 h-screen overflow-y-auto">
+          <a
+            href="../index.html"
+            class="text-xl font-bold text-indigo-600 mb-8 block"
+            >OpenCode Guide</a
+          >
+          <nav class="space-y-2">
+            <a href="intro.html" class="sidebar-link">1. 什么是 OpenCode？</a>
+            <a href="install.html" class="sidebar-link">2. 安装指南</a>
+            <a href="china-guide.html" class="sidebar-link"
+              >3. 国内特供版 <span class="tag">Hot</span></a
+            >
+            <a href="migration.html" class="sidebar-link">4. 从 Cursor 迁移</a>
+            <a href="configuration.html" class="sidebar-link">5. 详细配置</a>
+            <a href="workflows.html" class="sidebar-link">6. 实战工作流</a>
+            <a href="usage.html" class="sidebar-link active">7. 常用技巧</a>
+            <a href="advanced.html" class="sidebar-link">8. 高级技巧</a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 px-4 py-12 md:px-12 lg:px-24">
+        <article class="prose max-w-4xl mx-auto">
+          <h1 class="text-4xl font-extrabold text-slate-900 mb-8">
+            第七章：实战技巧 —— 掌控智能体
+          </h1>
+
+          <p class="text-lg">
+            掌握 OpenCode
+            的核心不是写出完美的代码，而是学会如何高效地与它协作。以下是每个高级用户必须掌握的技巧。
+          </p>
+
+          <h2>1. 核心工作流：先思考，后执行</h2>
+          <p>
+            OpenCode 提供两种模式，通过
+            <span class="kbd">Tab</span> 键快速切换：
+          </p>
+          <div class="grid md:grid-cols-2 gap-4 my-8">
+            <div class="text-center">
+              <img
+                src="../pics/7.1_1.png"
+                alt="Plan Mode"
+                class="rounded border border-slate-200 shadow-sm mb-2"
+              />
+              <span class="text-xs text-slate-500">Plan Mode (思考模式)</span>
+            </div>
+            <div class="text-center">
+              <img
+                src="../pics/7.1_2.png"
+                alt="Build Mode"
+                class="rounded border border-slate-200 shadow-sm mb-2"
+              />
+              <span class="text-xs text-slate-500">Build Mode (执行模式)</span>
+            </div>
+          </div>
+          <ul class="list-disc pl-6 mb-6 space-y-4">
+            <li>
+              <strong>Plan 模式</strong> (建议优先使用)：在此模式下，OpenCode
+              无法修改文件。它会分析你的需求，给出一份详尽的执行计划。你可以对计划提出质疑、修改细节，直到满意。
+            </li>
+            <li>
+              <strong>Build 模式</strong>：在此模式下，OpenCode
+              会获得文件写入权限，开始真正地修改代码、运行命令。
+            </li>
+          </ul>
+          <div class="bg-amber-50 border-l-4 border-amber-500 p-4 my-6">
+            <strong>技巧：</strong> 对于大型功能，先在 Plan
+            模式下讨论清楚。一旦达成一致，切换到 Build 模式并说：“Sounds good!
+            Go ahead.”
+          </div>
+
+          <h2>2. 精准提供上下文 (@ 符号)</h2>
+          <p>
+            不要指望 AI 自动猜到你要修改哪个文件。使用
+            <span class="kbd">@</span>
+            符号可以触发模糊搜索，将特定的文件、文件夹甚至是整个模块作为上下文传递给
+            AI。
+          </p>
+          <p class="italic text-slate-500">
+            示例："参考
+            <span class="text-indigo-600 font-mono">@auth.ts</span> 里的逻辑，在
+            <span class="text-indigo-600 font-mono">@settings.ts</span>
+            里实现同样的功能。"
+          </p>
+
+          <h2>3. 撤销与回溯 (/undo)</h2>
+          <p>
+            如果 OpenCode 的修改不符合预期，千万不要手动一个个文件去改回。使用
+            <code>/undo</code> 命令可以一键回滚。你可以连续运行多次
+            <code>/undo</code> 来回退到之前的任何状态。
+          </p>
+
+          <h2>4. 图片识别 (视觉能力)</h2>
+          <p>
+            如果你有一个 UI 需求，直接把截图拖进终端！OpenCode
+            可以分析图片的布局、颜色，并将其转化为代码。这在还原设计稿时非常高效。
+          </p>
+
+          <h2>常用命令速查表</h2>
+          <div class="overflow-x-auto">
+            <table class="min-w-full border border-slate-200 mt-6">
+              <thead class="bg-slate-50">
+                <tr>
+                  <th class="px-4 py-2 text-left border-b">命令</th>
+                  <th class="px-4 py-2 text-left border-b">描述</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-4 py-2 border-b font-mono text-indigo-600">
+                    /init
+                  </td>
+                  <td class="px-4 py-2 border-b">
+                    初始化当前项目 (生成 AGENTS.md)
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-2 border-b font-mono text-indigo-600">
+                    /connect
+                  </td>
+                  <td class="px-4 py-2 border-b">配置模型提供商</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-2 border-b font-mono text-indigo-600">
+                    /undo
+                  </td>
+                  <td class="px-4 py-2 border-b">撤销上一次代码变更</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-2 border-b font-mono text-indigo-600">
+                    /share
+                  </td>
+                  <td class="px-4 py-2 border-b">生成并分享当前会话链接</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="mt-12 flex justify-between items-center">
+            <a
+              href="install.html"
+              class="text-indigo-600 font-semibold hover:underline"
+            >
+              <i class="fas fa-arrow-left mr-2"></i> 上一步：安装与配置
+            </a>
+            <a
+              href="../index.html"
+              class="px-6 py-3 bg-slate-800 text-white rounded-lg hover:bg-slate-900 transition"
+            >
+              返回首页 <i class="fas fa-home ml-2"></i>
+            </a>
+          </div>
+        </article>
+      </main>
+    </div>
+    <script src="../assets/main.js"></script>
+  </body>
+</html>

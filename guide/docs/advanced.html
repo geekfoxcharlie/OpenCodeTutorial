@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>进阶专题：MCP 与模型选择 - OpenCode 中文指南</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../assets/custom.css" />
+  </head>
+  <body class="bg-white">
+    <!-- Mobile Header -->
+    <div
+      class="md:hidden bg-slate-50 border-b border-slate-200 p-4 flex justify-between items-center"
+    >
+      <a href="../index.html" class="font-bold text-indigo-600"
+        >OpenCode Guide</a
+      >
+      <button
+        id="menuBtn"
+        class="p-2 text-slate-600 hover:bg-slate-200 rounded"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <div class="flex min-h-screen">
+      <!-- Sidebar -->
+      <aside
+        id="sidebar"
+        class="w-64 border-r border-slate-200 bg-slate-50 fixed inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 md:relative transition-transform duration-300"
+      >
+        <div class="p-6 sticky top-0 h-screen overflow-y-auto">
+          <a
+            href="../index.html"
+            class="text-xl font-bold text-indigo-600 mb-8 block"
+            >OpenCode Guide</a
+          >
+          <nav class="space-y-2">
+            <a href="intro.html" class="sidebar-link">1. 什么是 OpenCode？</a>
+            <a href="install.html" class="sidebar-link">2. 安装指南</a>
+            <a href="china-guide.html" class="sidebar-link"
+              >3. 国内特供版 <span class="tag">Hot</span></a
+            >
+            <a href="migration.html" class="sidebar-link">4. 从 Cursor 迁移</a>
+            <a href="configuration.html" class="sidebar-link">5. 详细配置</a>
+            <a href="workflows.html" class="sidebar-link">6. 实战工作流</a>
+            <a href="usage.html" class="sidebar-link">7. 常用技巧</a>
+            <a href="advanced.html" class="sidebar-link active">8. 高级技巧</a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 px-4 py-12 md:px-12 lg:px-24">
+        <article class="prose max-w-4xl mx-auto">
+          <h1 class="text-4xl font-extrabold text-slate-900 mb-8">
+            第八章：高手进阶 —— 探索无限可能
+          </h1>
+
+          <h2>1. 模型选择：逻辑还是性价比？</h2>
+          <p>
+            OpenCode
+            的一大魅力在于你可以随时更换“大脑”。中文社区的成熟经验是<strong>“混用策略”</strong>：
+          </p>
+          <ul class="list-disc pl-6 mb-6 space-y-4 text-slate-600">
+            <li>
+              <strong>Claude 3.5 Sonnet</strong>:
+              <span class="tag">逻辑之王</span> 适合复杂重构、架构设计和疑难
+              Bug。
+            </li>
+            <li>
+              <strong>DeepSeek Coder V3</strong>:
+              <span class="tag">性价比之选</span>
+              适合日常增删改查、编写单测，通过本地或中转 API 接入，成本极低。
+            </li>
+          </ul>
+
+          <h2>2. Oh My OpenCode 与 ULW 模式</h2>
+          <p>
+            如果你安装了
+            <strong>Oh My OpenCode</strong> 增强插件，你将解锁更强大的功能：
+          </p>
+          <ul class="list-disc pl-6 mb-6 space-y-4 text-slate-600">
+            <li>
+              <strong>ULW (UltraWork) 模式</strong>:
+              开启多代理协作模式。当你需要完成一个跨模块的大型任务时，ULW
+              会自动调度研究、设计、编码等多个子智能体并行工作。
+            </li>
+            <li>
+              <strong>/ralph-loop</strong>:
+              进入“死磕模式”。智能体会不断尝试运行测试、修复报错，直到代码完全跑通为止。
+            </li>
+          </ul>
+
+          <h2>3. Windows 用户避坑指南</h2>
+          <div class="bg-red-50 border-l-4 border-red-500 p-4 my-6">
+            <ul class="list-disc pl-5 text-sm text-red-800 space-y-2">
+              <li><strong>优先使用 WSL2</strong>：这是最顺畅的体验方式。</li>
+              <li>
+                <strong>证书错误</strong>：如果登录时遇到 TLS 报错，可尝试设置
+                <code>set NODE_TLS_REJECT_UNAUTHORIZED=0</code>。
+              </li>
+              <li>
+                <strong>剪贴板权限</strong>：在 Linux
+                下如果无法粘贴，请确保安装了 <code>xclip</code> (X11) 或
+                <code>wl-clipboard</code> (Wayland)。
+              </li>
+            </ul>
+          </div>
+
+          <h2>4. 定制化：Rules 与 Skills</h2>
+          <p>这是让 OpenCode 真正“听懂人话”的关键。</p>
+
+          <h3>Rules: 让 AI 遵守团队规范</h3>
+          <p>
+            在项目根目录创建
+            <code>.opencode/rules.md</code>。这是最简单但最有效的定制方式。
+          </p>
+          <pre><code class="language-markdown"># 项目编码规范
+
+1. **语言要求**:
+   - 必须使用 TypeScript 严格模式。
+   - 所有变量名使用 camelCase。
+   
+2. **测试要求**:
+   - 每次修改组件后，必须运行相关测试。
+   - 必须使用 React Testing Library。
+
+3. **提交规范**:
+   - Commit message 必须遵循 Conventional Commits (feat, fix, docs)。
+</code></pre>
+
+          <h3>Skills: 给 AI 安装新技能</h3>
+          <p>
+            Skills 本质上是一段封装好的 Prompt 或脚本。你可以用 YAML 定义技能。
+          </p>
+          <pre><code class="language-yaml"># .opencode/skills/browser-test.md
+---
+name: browser-test
+description: 使用 Playwright 运行浏览器测试
+tools: [bash]
+---
+请执行以下步骤进行浏览器测试：
+1. 运行 `npx playwright test $ARGS`
+2. 如果失败，读取 `playwright-report/index.html` 并分析原因。
+</code></pre>
+
+          <h2>5. MCP 实战配置</h2>
+          <p>
+            以最常用的 <strong>PostgreSQL</strong> 和
+            <strong>Browser</strong> 插件为例：
+          </p>
+          <pre><code class="language-json">{
+  "mcpServers": {
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://user:pass@localhost:5432/db"]
+    },
+    "browser": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-puppeteer"]
+    }
+  }
+}</code></pre>
+          <p>
+            配置完成后，你就可以直接说：“查询 Users 表中最近注册的 10 个用户” 或
+            “访问 React 官网查一下最新的 Hook 文档”。
+          </p>
+
+          <h2>5. Oh My OpenCode 特色：ULW 模式</h2>
+          <p>
+            作为资深用户，你不能错过 <strong>Oh My OpenCode</strong> 插件带来的
+            <strong>UltraWork (ULW)</strong>
+            模式。它不仅是单兵作战，更是“特种部队”：
+          </p>
+          <ul class="list-disc pl-6 mb-6 space-y-2 text-slate-600">
+            <li>
+              <strong>多代理并发</strong>：同时调用 Explore、Librarian 和 Oracle
+              代理，速度提升 300%。
+            </li>
+            <li>
+              <strong>深度代码库探索</strong>：使用 AST-grep
+              深入语法树级别理解你的代码。
+            </li>
+          </ul>
+
+          <div class="mt-12 flex justify-between items-center">
+            <a
+              href="usage.html"
+              class="text-indigo-600 font-semibold hover:underline"
+            >
+              <i class="fas fa-arrow-left mr-2"></i> 上一步：实战技巧
+            </a>
+            <a
+              href="../index.html"
+              class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-bold"
+            >
+              阅读完成，开启 AI 编程之旅！
+            </a>
+          </div>
+        </article>
+      </main>
+    </div>
+    <script src="../assets/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>快速上手：安装与配置 - OpenCode 中文指南</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../assets/custom.css" />
+  </head>
+  <body class="bg-white">
+    <!-- Mobile Header -->
+    <div
+      class="md:hidden bg-slate-50 border-b border-slate-200 p-4 flex justify-between items-center"
+    >
+      <a href="../index.html" class="font-bold text-indigo-600"
+        >OpenCode Guide</a
+      >
+      <button
+        id="menuBtn"
+        class="p-2 text-slate-600 hover:bg-slate-200 rounded"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <div class="flex min-h-screen">
+      <!-- Sidebar -->
+      <aside
+        id="sidebar"
+        class="w-64 border-r border-slate-200 bg-slate-50 fixed inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 md:relative transition-transform duration-300"
+      >
+        <div class="p-6 sticky top-0 h-screen overflow-y-auto">
+          <a
+            href="../index.html"
+            class="text-xl font-bold text-indigo-600 mb-8 block"
+            >OpenCode Guide</a
+          >
+          <nav class="space-y-2">
+            <a href="intro.html" class="sidebar-link">1. 什么是 OpenCode？</a>
+            <a href="install.html" class="sidebar-link active">2. 安装指南</a>
+            <a href="china-guide.html" class="sidebar-link"
+              >3. 国内特供版 <span class="tag">Hot</span></a
+            >
+            <a href="migration.html" class="sidebar-link">4. 从 Cursor 迁移</a>
+            <a href="configuration.html" class="sidebar-link">5. 详细配置</a>
+            <a href="workflows.html" class="sidebar-link">6. 实战工作流</a>
+            <a href="usage.html" class="sidebar-link">7. 常用技巧</a>
+            <a href="advanced.html" class="sidebar-link">8. 高级技巧</a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 px-4 py-12 md:px-12 lg:px-24">
+        <article class="prose max-w-4xl mx-auto">
+          <h1 class="text-4xl font-extrabold text-slate-900 mb-8">
+            第二章：快速上手 —— 安装与配置
+          </h1>
+
+          <h2>1. 安装 OpenCode</h2>
+          <p>OpenCode 支持全平台安装。最简单的方法是使用安装脚本：</p>
+          <pre><code class="language-bash">curl -fsSL https://opencode.ai/install | bash</code></pre>
+
+          <h3 class="font-bold text-slate-800 mb-2">针对不同平台的补充：</h3>
+          <ul class="list-disc pl-6 mb-6 text-slate-600">
+            <li>
+              <strong>macOS (Homebrew)</strong>:
+              <code>brew install anomalyco/tap/opencode</code>
+            </li>
+            <li>
+              <strong>Windows</strong>: <code>choco install opencode</code> 或
+              <code>scoop install extras/opencode</code>
+            </li>
+            <li>
+              <strong>Docker</strong>:
+              <code>docker run -it --rm ghcr.io/anomalyco/opencode</code>
+            </li>
+          </ul>
+
+          <h2>2. 配置 LLM 服务商</h2>
+          <p>
+            初次启动建议使用
+            <strong>OpenCode Zen</strong
+            >，这是官方提供的模型中转服务，经过深度优化。
+          </p>
+          <ol class="list-decimal pl-6 mb-6 space-y-4 text-slate-600">
+            <li>在终端输入 <code>opencode</code> 启动。</li>
+            <li>执行命令 <code>/connect</code>。</li>
+            <li>
+              在弹出的界面中选择
+              <strong>opencode</strong>，跳转到浏览器登录并获取 API Key。
+            </li>
+            <li>回到终端粘贴 Key 即可完成。</li>
+          </ol>
+          <p>
+            如果你想使用自己的 API（如 Claude 3.5 Sonnet 或
+            DeepSeek），可以编辑配置文件
+            <code>~/.config/opencode/config.json</code>。
+          </p>
+
+          <h2>3. 项目初始化</h2>
+          <p>进入你的项目目录，运行初始化命令：</p>
+          <pre><code class="language-bash">cd /your/project/path
+opencode
+/init</code></pre>
+          <p>
+            该命令会让 OpenCode 扫描你的项目结构，并生成
+            <code>AGENTS.md</code>。这对于它理解你的代码至关重要，<strong
+              >请务必将此文件加入 Git 版本控制。</strong
+            >
+          </p>
+
+          <div class="mt-12 flex justify-between items-center">
+            <a
+              href="intro.html"
+              class="text-indigo-600 font-semibold hover:underline"
+            >
+              <i class="fas fa-arrow-left mr-2"></i> 上一步：启航
+            </a>
+            <a
+              href="usage.html"
+              class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+            >
+              下一步：实战技巧 <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+        </article>
+      </main>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="../assets/main.js"></script>
+  </body>
+</html>

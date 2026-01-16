@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenCode 中文指南 - 你的第一款 AI 编程智能体</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="assets/custom.css" />
+    <style>
+      .hero-bg {
+        background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+      }
+      .card-hover:hover {
+        transform: translateY(-4px);
+        box-shadow:
+          0 20px 25px -5px rgb(0 0 0 / 0.1),
+          0 8px 10px -6px rgb(0 0 0 / 0.1);
+      }
+    </style>
+  </head>
+  <body class="bg-slate-50">
+    <nav
+      class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl font-bold gradient-text italic"
+              >OpenCode Guide</span
+            >
+            <span
+              class="bg-indigo-100 text-indigo-700 text-xs px-2 py-0.5 rounded-full"
+              >中文版</span
+            >
+          </div>
+          <div class="hidden md:flex space-x-8 text-sm font-medium">
+            <a href="docs/install.html" class="hover:text-indigo-600 transition"
+              >安装</a
+            >
+            <a
+              href="docs/china-guide.html"
+              class="hover:text-indigo-600 transition text-indigo-600"
+              >国内用户</a
+            >
+            <a
+              href="docs/migration.html"
+              class="hover:text-indigo-600 transition"
+              >从 Cursor 迁移</a
+            >
+            <a
+              href="https://github.com/anomalyco/opencode"
+              target="_blank"
+              class="hover:text-indigo-600 transition"
+              >GitHub</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <!-- Hero Section -->
+      <section class="hero-bg py-20 md:py-32">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1
+            class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight text-slate-900"
+          >
+            让 AI 智能体 <br /><span class="gradient-text"
+              >重塑你的编程体验</span
+            >
+          </h1>
+          <p
+            class="text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed"
+          >
+            OpenCode 是你的开源 AI
+            编程搭档。它不仅能写代码，还能<strong>像人一样思考</strong>、<strong
+              >自动改 Bug</strong
+            >、<strong>帮你搞定整个项目</strong>。
+          </p>
+          <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a
+              href="docs/intro.html"
+              class="px-8 py-4 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition shadow-lg shadow-indigo-200 text-lg"
+            >
+              开始阅读指南
+            </a>
+            <a
+              href="docs/china-guide.html"
+              class="px-8 py-4 bg-white border border-indigo-200 text-indigo-700 rounded-lg font-semibold hover:bg-indigo-50 transition text-lg flex items-center justify-center gap-2"
+            >
+              <i class="fas fa-dragon"></i> 国内用户直达
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- User Segments -->
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <h2 class="text-3xl font-bold text-center mb-12 text-slate-900">
+          选择适合你的起点
+        </h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Card 1: Beginners -->
+          <a
+            href="docs/intro.html"
+            class="card-hover bg-white p-8 rounded-2xl border border-slate-100 shadow-sm transition duration-300 block"
+          >
+            <div
+              class="w-14 h-14 bg-green-100 text-green-600 rounded-xl flex items-center justify-center mb-6"
+            >
+              <i class="fas fa-baby text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-4 text-slate-900">
+              我是普通人/零基础
+            </h3>
+            <p class="text-slate-600 leading-relaxed mb-4">
+              甚至没写过代码？没关系。从“超级实习生”的概念讲起，手把手教你如何用
+              AI 帮你写第一个程序。
+            </p>
+            <span
+              class="text-green-600 font-semibold text-sm flex items-center gap-2"
+            >
+              从零开始 <i class="fas fa-arrow-right"></i>
+            </span>
+          </a>
+
+          <!-- Card 2: Migrators -->
+          <a
+            href="docs/migration.html"
+            class="card-hover bg-white p-8 rounded-2xl border border-slate-100 shadow-sm transition duration-300 block"
+          >
+            <div
+              class="w-14 h-14 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6"
+            >
+              <i class="fas fa-people-carry text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-4 text-slate-900">
+              我从 Cursor/Copilot 来
+            </h3>
+            <p class="text-slate-600 leading-relaxed mb-4">
+              你已经会用 Cmd+K 了，但想体验更强的 Agent
+              能力？这里有快速迁移对照表。
+            </p>
+            <span
+              class="text-blue-600 font-semibold text-sm flex items-center gap-2"
+            >
+              快速上手 <i class="fas fa-arrow-right"></i>
+            </span>
+          </a>
+
+          <!-- Card 3: China Users -->
+          <a
+            href="docs/china-guide.html"
+            class="card-hover bg-white p-8 rounded-2xl border border-slate-100 shadow-sm transition duration-300 block"
+          >
+            <div
+              class="w-14 h-14 bg-red-100 text-red-600 rounded-xl flex items-center justify-center mb-6"
+            >
+              <i class="fas fa-dragon text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-4 text-slate-900">中国大陆用户</h3>
+            <p class="text-slate-600 leading-relaxed mb-4">
+              针对国内网络环境优化的配置指南，包含
+              DeepSeek、通义千问等国产模型接入方案。
+            </p>
+            <span
+              class="text-red-600 font-semibold text-sm flex items-center gap-2"
+            >
+              国内特供 <i class="fas fa-arrow-right"></i>
+            </span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Features -->
+      <section class="bg-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 class="text-3xl font-bold text-center mb-12 text-slate-900">
+            为什么选择 OpenCode？
+          </h2>
+          <div class="grid md:grid-cols-3 gap-8">
+            <div class="p-6">
+              <div
+                class="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center mb-4"
+              >
+                <i class="fas fa-terminal"></i>
+              </div>
+              <h3 class="font-bold mb-2">终端原生体验</h3>
+              <p class="text-slate-600 text-sm">
+                不需要离开你熟悉的开发环境，所有操作都在命令行完成。
+              </p>
+            </div>
+            <div class="p-6">
+              <div
+                class="w-10 h-10 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-4"
+              >
+                <i class="fas fa-brain"></i>
+              </div>
+              <h3 class="font-bold mb-2">全项目理解</h3>
+              <p class="text-slate-600 text-sm">
+                不像 Copilot 那样只看当前文件，OpenCode 理解你的整个代码库。
+              </p>
+            </div>
+            <div class="p-6">
+              <div
+                class="w-10 h-10 bg-green-100 text-green-600 rounded-lg flex items-center justify-center mb-4"
+              >
+                <i class="fas fa-plug"></i>
+              </div>
+              <h3 class="font-bold mb-2">无限扩展性</h3>
+              <p class="text-slate-600 text-sm">
+                支持 MCP 协议，可以连接数据库、浏览器，甚至自定义工具。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-slate-200 py-12 bg-slate-50">
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-slate-500 text-sm"
+      >
+        <p>© 2026 OpenCode 中文指南 | 开源 MIT 协议</p>
+      </div>
+    </footer>
+  </body>
+</html>

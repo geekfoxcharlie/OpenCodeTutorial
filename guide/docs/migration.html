@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>老手迁移指南 - OpenCode 中文指南</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../assets/custom.css" />
+  </head>
+  <body class="bg-white">
+    <!-- Mobile Header -->
+    <div
+      class="md:hidden bg-slate-50 border-b border-slate-200 p-4 flex justify-between items-center"
+    >
+      <a href="../index.html" class="font-bold text-indigo-600"
+        >OpenCode Guide</a
+      >
+      <button
+        id="menuBtn"
+        class="p-2 text-slate-600 hover:bg-slate-200 rounded"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <div class="flex min-h-screen">
+      <!-- Sidebar -->
+      <aside
+        id="sidebar"
+        class="w-64 border-r border-slate-200 bg-slate-50 fixed inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 md:relative transition-transform duration-300"
+      >
+        <div class="p-6 sticky top-0 h-screen overflow-y-auto">
+          <a
+            href="../index.html"
+            class="text-xl font-bold text-indigo-600 mb-8 block"
+            >OpenCode Guide</a
+          >
+          <nav class="space-y-2">
+            <a href="intro.html" class="sidebar-link">1. 什么是 OpenCode？</a>
+            <a href="install.html" class="sidebar-link">2. 安装指南</a>
+            <a href="china-guide.html" class="sidebar-link"
+              >3. 国内特供版 <span class="tag">Hot</span></a
+            >
+            <a href="migration.html" class="sidebar-link active"
+              >4. 从 Cursor 迁移</a
+            >
+            <a href="configuration.html" class="sidebar-link">5. 详细配置</a>
+            <a href="workflows.html" class="sidebar-link">6. 实战工作流</a>
+            <a href="usage.html" class="sidebar-link">7. 常用技巧</a>
+            <a href="advanced.html" class="sidebar-link">8. 高级技巧</a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 px-4 py-12 md:px-12 lg:px-24">
+        <article class="prose max-w-4xl mx-auto">
+          <h1 class="text-4xl font-extrabold text-slate-900 mb-6">
+            第四章：从 Cursor/Copilot 迁移
+          </h1>
+          <p class="text-lg text-slate-600 mb-8">
+            如果你已经习惯了 AI 编程工具，OpenCode
+            会让你有一种"从用方向盘到直接控制发动机"的感觉。这里是平滑过渡的关键差异对照。
+          </p>
+
+          <h2>1. 核心思维转变</h2>
+          <p>你不需要再点击"Generate"按钮，而是直接<strong>说话</strong>。</p>
+
+          <div class="grid md:grid-cols-2 gap-6 my-8">
+            <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+              <h4 class="font-bold text-slate-800 mb-3 flex items-center">
+                <span
+                  class="px-2 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mr-2 text-xs"
+                  >Copilot</span
+                >
+                补全式思维
+              </h4>
+              <p class="text-sm text-slate-600 mb-3">
+                你在写代码，AI 在你后面看，偶尔递给你一个提示。
+              </p>
+              <div
+                class="font-mono text-xs bg-white p-3 rounded border border-slate-200"
+              >
+                // 你开始写函数<br />
+                function calculate() {<br />
+                &nbsp;&nbsp;// Tab Tab Tab...
+              </div>
+            </div>
+            <div class="bg-indigo-50 p-6 rounded-lg border border-indigo-200">
+              <h4 class="font-bold text-indigo-800 mb-3 flex items-center">
+                <span
+                  class="px-2 h-8 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mr-2 text-xs"
+                  >OpenCode</span
+                >
+                代理式思维
+              </h4>
+              <p class="text-sm text-indigo-900 mb-3">
+                你在描述需求，AI 去执行并修改文件。
+              </p>
+              <div
+                class="font-mono text-xs bg-white p-3 rounded border border-indigo-200"
+              >
+                > 重构这个函数，添加类型守卫<br />
+                > ./run test<br />
+                > /undo
+              </div>
+            </div>
+          </div>
+
+          <h2>2. 操作命令对照表</h2>
+          <p>以下是你在 IDE 中常用的快捷键，在 OpenCode 中的等价命令：</p>
+
+          <div class="overflow-x-auto">
+            <table class="min-w-full border border-slate-200 mt-6">
+              <thead class="bg-slate-50">
+                <tr>
+                  <th
+                    class="px-4 py-3 text-left border-b font-semibold text-slate-700"
+                  >
+                    功能
+                  </th>
+                  <th
+                    class="px-4 py-3 text-left border-b font-semibold text-slate-700"
+                  >
+                    Cursor / Copilot (IDE)
+                  </th>
+                  <th
+                    class="px-4 py-3 text-left border-b font-semibold text-indigo-700"
+                  >
+                    OpenCode (Terminal)
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-4 py-3 border-b">生成代码</td>
+                  <td class="px-4 py-3 border-b text-slate-600">
+                    Ctrl + K (生成)
+                  </td>
+                  <td
+                    class="px-4 py-3 border-b text-indigo-600 font-mono text-sm"
+                  >
+                    直接描述需求
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 border-b">解释代码</td>
+                  <td class="px-4 py-3 border-b text-slate-600">
+                    右键 -> Explain
+                  </td>
+                  <td
+                    class="px-4 py-3 border-b text-indigo-600 font-mono text-sm"
+                  >
+                    @file 解释这个文件
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 border-b">撤销更改</td>
+                  <td class="px-4 py-3 border-b text-slate-600">Ctrl + Z</td>
+                  <td
+                    class="px-4 py-3 border-b text-indigo-600 font-mono text-sm"
+                  >
+                    /undo
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 border-b">查看差异</td>
+                  <td class="px-4 py-3 border-b text-slate-600">Diff View</td>
+                  <td
+                    class="px-4 py-3 border-b text-indigo-600 font-mono text-sm"
+                  >
+                    /diff
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 border-b">全局查找</td>
+                  <td class="px-4 py-3 border-b text-slate-600">
+                    Search Panel
+                  </td>
+                  <td
+                    class="px-4 py-3 border-b text-indigo-600 font-mono text-sm"
+                  >
+                    @search 关键词
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 border-b">智能体模式</td>
+                  <td class="px-4 py-3 border-b text-slate-600">
+                    Chat Tab / Agent Mode
+                  </td>
+                  <td
+                    class="px-4 py-3 border-b text-indigo-600 font-mono text-sm"
+                  >
+                    按 Tab 切换 Plan/Build
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>3. 迁移 Checklist</h2>
+          <p>开始之前，确保你已经准备好以下内容：</p>
+          <div class="bg-white border border-slate-200 rounded-lg p-6 my-6">
+            <div class="flex items-start mb-4">
+              <input type="checkbox" class="mt-1 mr-3" id="check1" />
+              <label for="check1" class="text-slate-700"
+                >终端安装完成 (<code>opencode</code> 命令可用)</label
+              >
+            </div>
+            <div class="flex items-start mb-4">
+              <input type="checkbox" class="mt-1 mr-3" id="check2" />
+              <label for="check2" class="text-slate-700"
+                >至少配置好了一个模型 (推荐 DeepSeek 或 Claude)</label
+              >
+            </div>
+            <div class="flex items-start mb-4">
+              <input type="checkbox" class="mt-1 mr-3" id="check3" />
+              <label for="check3" class="text-slate-700"
+                >项目已初始化 (<code>/init</code>)</label
+              >
+            </div>
+            <div class="flex items-start">
+              <input type="checkbox" class="mt-1 mr-3" id="check4" />
+              <label for="check4" class="text-slate-700"
+                >知道如何切换 Plan 模式和 Build 模式 (<kbd>Tab</kbd>)</label
+              >
+            </div>
+          </div>
+
+          <h2>4. 常见问题：为什么感觉不如 Cursor 好用？</h2>
+
+          <div class="space-y-4 my-6">
+            <div class="p-4 bg-slate-50 rounded-lg">
+              <h4 class="font-bold text-slate-800">
+                Q: Cursor 有 Indexing，OpenCode 也有吗？
+              </h4>
+              <p class="text-slate-600 m-0">
+                A: 有。执行 <code>/init</code> 后，OpenCode 会扫描项目结构生成
+                <code>AGENTS.md</code>。这个文件至关重要，它就像 Cursor 的
+                Index。
+              </p>
+            </div>
+            <div class="p-4 bg-slate-50 rounded-lg">
+              <h4 class="font-bold text-slate-800">
+                Q: 我习惯了 Cmd+K 快速生成，OpenCode 能做到吗？
+              </h4>
+              <p class="text-slate-600 m-0">
+                A: OpenCode
+                主要是对话式而非补全式。如果你需要极致的速度，建议保持 OpenCode
+                用于复杂任务，日常小改动可以配合 Copilot。
+              </p>
+            </div>
+            <div class="p-4 bg-slate-50 rounded-lg">
+              <h4 class="font-bold text-slate-800">Q: 跨文件重构方便吗？</h4>
+              <p class="text-slate-600 m-0">
+                A: 这是 OpenCode 的强项。你可以明确指定："把 @utils/auth.ts
+                中的逻辑迁移到 @services/auth.ts，并更新所有 import 引用。"
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-12 flex justify-between items-center">
+            <a
+              href="china-guide.html"
+              class="text-indigo-600 font-semibold hover:underline"
+            >
+              <i class="fas fa-arrow-left mr-2"></i> 上一步：国内特供版
+            </a>
+            <a
+              href="configuration.html"
+              class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+            >
+              下一步：详细配置 <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+        </article>
+      </main>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="../assets/main.js"></script>
+  </body>
+</html>

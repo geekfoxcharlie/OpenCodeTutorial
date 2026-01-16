@@ -1,0 +1,13 @@
+{
+  "name": "opencode-tutorial",
+  "version": "1.0.0",
+  "description": "OpenCode 中文指南项目",
+  "type": "module",
+  "scripts": {
+    "dev": "python -m http.server 8000",
+    "preview": "python -m http.server 8080"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.0"
+  }
+}

@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>配置详解 - OpenCode 中文指南</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../assets/custom.css" />
+  </head>
+  <body class="bg-white">
+    <!-- Mobile Header -->
+    <div
+      class="md:hidden bg-slate-50 border-b border-slate-200 p-4 flex justify-between items-center"
+    >
+      <a href="../index.html" class="font-bold text-indigo-600"
+        >OpenCode Guide</a
+      >
+      <button
+        id="menuBtn"
+        class="p-2 text-slate-600 hover:bg-slate-200 rounded"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <div class="flex min-h-screen">
+      <!-- Sidebar -->
+      <aside
+        id="sidebar"
+        class="w-64 border-r border-slate-200 bg-slate-50 fixed inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 md:relative transition-transform duration-300"
+      >
+        <div class="p-6 sticky top-0 h-screen overflow-y-auto">
+          <a
+            href="../index.html"
+            class="text-xl font-bold text-indigo-600 mb-8 block"
+            >OpenCode Guide</a
+          >
+          <nav class="space-y-2">
+            <a href="intro.html" class="sidebar-link">1. 什么是 OpenCode？</a>
+            <a href="install.html" class="sidebar-link">2. 安装指南</a>
+            <a href="china-guide.html" class="sidebar-link"
+              >3. 国内特供版 <span class="tag">Hot</span></a
+            >
+            <a href="migration.html" class="sidebar-link">4. 从 Cursor 迁移</a>
+            <a href="configuration.html" class="sidebar-link active"
+              >5. 详细配置</a
+            >
+            <a href="workflows.html" class="sidebar-link">6. 实战工作流</a>
+            <a href="usage.html" class="sidebar-link">7. 常用技巧</a>
+            <a href="advanced.html" class="sidebar-link">8. 高级技巧</a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 px-4 py-12 md:px-12 lg:px-24">
+        <article class="prose max-w-4xl mx-auto">
+          <h1 class="text-4xl font-extrabold text-slate-900 mb-8">
+            第五章：配置详解 —— 定制你的专属 AI
+          </h1>
+
+          <p class="text-lg">
+            OpenCode 的强大在于其极高的可配置性。配置文件通常位于
+            <code>~/.config/opencode/config.json</code> (Linux/macOS) 或
+            <code>%APPDATA%/opencode/config.json</code> (Windows)。
+          </p>
+
+          <pre><code class="language-json">{
+  "providers": {
+    "opencode": { "id": "opencode" },
+    "openai": {
+      "id": "openai",
+      "args": { "apiKey": "sk-..." }
+    }
+  },
+  "models": {
+    "default": "opencode/default"
+  }
+}</code></pre>
+
+          <h2>1. 接入 DeepSeek Coder V3 (高性价比)</h2>
+          <p>
+            DeepSeek 是目前最适合编程的高性价比模型。你可以通过 OpenRouter 或
+            DeepSeek 官方 API 接入。
+          </p>
+          <pre><code class="language-json">{
+  "providers": {
+    "deepseek": {
+      "id": "openai",
+      "args": {
+        "baseUrl": "https://api.deepseek.com/v1",
+        "apiKey": "sk-your-deepseek-key",
+        "models": {
+          "coder": { "id": "deepseek-coder" },
+          "chat": { "id": "deepseek-chat" }
+        }
+      }
+    }
+  },
+  "models": {
+    "default": "deepseek/coder"
+  }
+}</code></pre>
+
+          <h2>2. 接入本地 Ollama (隐私优先)</h2>
+          <p>
+            如果你拥有强劲的本地显卡（如 RTX 4090），可以使用 Ollama 运行 Llama
+            3 或 DeepSeek 本地版，实现完全免费且隐私的编程助手。
+          </p>
+          <pre><code class="language-json">{
+  "providers": {
+    "ollama": {
+      "id": "openai",
+      "args": {
+        "baseUrl": "http://localhost:11434/v1",
+        "apiKey": "ollama",
+        "models": {
+          "llama3": { "id": "llama3:70b" },
+          "deepseek": { "id": "deepseek-coder:33b" }
+        }
+      }
+    }
+  }
+}</code></pre>
+
+          <h2>3. 设置别名 (Aliases)</h2>
+          <p>
+            不想每次都打
+            <code>anthropic/claude-3-5-sonnet-20240620</code>
+            这么长？设置别名吧。
+          </p>
+          <pre><code class="language-json">{
+  "models": {
+    "sonnet": "anthropic/claude-3-5-sonnet-20240620",
+    "gpt4o": "openai/gpt-4o",
+    "ds": "deepseek/coder"
+  }
+}</code></pre>
+          <p>
+            设置后，你可以在启动时直接使用：<code>opencode --model sonnet</code
+            >。
+          </p>
+
+          <div class="tip-box">
+            <strong>💡 提示</strong>
+            <p class="m-0">
+              修改配置文件后，无需重启终端，但在 OpenCode
+              交互界面中可能需要重启会话才能生效。
+            </p>
+          </div>
+
+          <div class="mt-12 flex justify-between items-center">
+            <a
+              href="install.html"
+              class="text-indigo-600 font-semibold hover:underline"
+            >
+              <i class="fas fa-arrow-left mr-2"></i> 上一步：快速上手
+            </a>
+            <a
+              href="workflows.html"
+              class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+            >
+              下一步：实战工作流 <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+        </article>
+      </main>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="../assets/main.js"></script>
+  </body>
+</html>

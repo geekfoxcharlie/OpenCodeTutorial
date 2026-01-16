@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>什么是 OpenCode？ - OpenCode 中文指南</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../assets/custom.css" />
+  </head>
+  <body class="bg-white">
+    <!-- Mobile Header -->
+    <div
+      class="md:hidden bg-slate-50 border-b border-slate-200 p-4 flex justify-between items-center"
+    >
+      <a href="../index.html" class="font-bold text-indigo-600"
+        >OpenCode Guide</a
+      >
+      <button
+        id="menuBtn"
+        class="p-2 text-slate-600 hover:bg-slate-200 rounded"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <div class="flex min-h-screen">
+      <!-- Sidebar -->
+      <aside
+        id="sidebar"
+        class="w-64 border-r border-slate-200 bg-slate-50 fixed inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 md:relative transition-transform duration-300"
+      >
+        <div class="p-6 sticky top-0 h-screen overflow-y-auto">
+          <a
+            href="../index.html"
+            class="text-xl font-bold text-indigo-600 mb-8 block"
+            >OpenCode Guide</a
+          >
+          <nav class="space-y-2">
+            <a href="intro.html" class="sidebar-link active"
+              >1. 什么是 OpenCode？</a
+            >
+            <a href="install.html" class="sidebar-link">2. 安装指南</a>
+            <a href="china-guide.html" class="sidebar-link"
+              >3. 国内特供版 <span class="tag">Hot</span></a
+            >
+            <a href="migration.html" class="sidebar-link">4. 从 Cursor 迁移</a>
+            <a href="configuration.html" class="sidebar-link">5. 详细配置</a>
+            <a href="workflows.html" class="sidebar-link">6. 实战工作流</a>
+            <a href="usage.html" class="sidebar-link">7. 常用技巧</a>
+            <a href="advanced.html" class="sidebar-link">8. 高级技巧</a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 px-4 py-12 md:px-12 lg:px-24">
+        <article class="prose max-w-4xl mx-auto">
+          <h1 class="text-4xl font-extrabold text-slate-900 mb-6">
+            第一章：什么是 OpenCode？ —— 你的超级 AI 实习生
+          </h1>
+
+          <p class="text-lg mb-6">
+            欢迎来到 AI
+            编程的新时代。如果你觉得自己“不会写代码”，或者只会“一点点代码”，那么
+            OpenCode 正是为你准备的。
+          </p>
+
+          <h2>1. 一个懂项目、会干活的“实习生”</h2>
+          <p>
+            你可能听说过 ChatGPT 或者 GitHub
+            Copilot。它们就像是一个<strong>博学的翻译官</strong>，你问它问题，它给你一段代码。
+          </p>
+          <p>而 <strong>OpenCode 是一名为你工作的“超级实习生”</strong>。</p>
+
+          <div class="grid md:grid-cols-2 gap-6 my-8">
+            <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+              <h4 class="font-bold text-slate-800 mb-2">
+                🤖 普通 AI (如 ChatGPT)
+              </h4>
+              <p class="text-sm text-slate-600 mb-3">
+                你给它需求，它给你建议。你需要自己复制、粘贴、测试。
+              </p>
+              <p class="text-xs text-slate-500">
+                就像一个“军师”，只出主意不干活。
+              </p>
+            </div>
+            <div class="bg-indigo-50 p-6 rounded-lg border border-indigo-200">
+              <h4 class="font-bold text-indigo-800 mb-2">🧠 OpenCode 智能体</h4>
+              <p class="text-sm text-indigo-900 mb-3">
+                你给它需求，它自己翻看项目、修改代码、运行程序、修复错误。
+              </p>
+              <p class="text-xs text-indigo-500">
+                就像一个“实习生”，直接帮你把活干完。
+              </p>
+            </div>
+          </div>
+
+          <h2>2. 为什么“普通人”也需要它？</h2>
+          <p>OpenCode 的强大之处在于它极大地降低了编程的门槛：</p>
+          <ul class="list-disc pl-6 mb-6 space-y-3">
+            <li>
+              <strong>拒绝“面对黑盒”</strong
+              >：它能帮你阅读和解释别人的代码，告诉你这段程序到底在做什么。
+            </li>
+            <li>
+              <strong>说人话办实事</strong
+              >：你只需要说“帮我把这个网页的背景改成浅蓝色”，它就会自动找到对应的
+              CSS 文件并修改。
+            </li>
+            <li>
+              <strong>自动查错</strong
+              >：如果你写错了，它能通过报错信息自动分析原因并给出修复方案。
+            </li>
+          </ul>
+
+          <h2>3. 它长什么样？</h2>
+          <div class="my-8">
+            <img
+              src="../pics/1.3_1.png"
+              alt="OpenCode 工作界面"
+              class="rounded-lg shadow-md border border-slate-200 mx-auto"
+            />
+            <p class="text-center text-sm text-slate-500 mt-2">
+              OpenCode 典型的对话工作界面
+            </p>
+          </div>
+          <p>
+            虽然它运行在命令行（Terminal）中，听起来很“程序员”，但实际上它的交互逻辑非常自然。你只需像平时聊天一样跟它说话即可。
+          </p>
+
+          <h2>4. 你需要准备什么？</h2>
+          <ul class="list-disc pl-6 mb-6 space-y-3 text-slate-700">
+            <li>
+              <strong>一颗敢于尝试的心</strong><br />
+              别被“代码”这两个字吓跑，有了 AI 辅助，编程更像是一场对话。
+            </li>
+            <li>
+              <strong>一个 LLM 的 API Key</strong><br />
+              这是 AI 的“大脑租金”。
+              <ul
+                class="list-circle pl-6 mt-2 space-y-1 text-sm text-slate-600"
+              >
+                <li>
+                  👉 国内用户：首选 <strong>DeepSeek</strong> (极便宜，国产最强)
+                </li>
+                <li>
+                  👉 追求极致：首选
+                  <strong>Claude 3.5 Sonnet</strong> (目前最聪明的 AI)
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+          <div class="tip-box">
+            <strong>💡 记住这一条</strong>
+            <p class="m-0">
+              OpenCode
+              不是要取代你，而是要给你配一个全天候待命的代码助手。你负责“出主意”，它负责“撸代码”。
+            </p>
+          </div>
+
+          <div class="mt-12 flex justify-between items-center">
+            <div></div>
+            <a
+              href="install.html"
+              class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-bold shadow-lg shadow-indigo-100"
+            >
+              开启之旅：安装 OpenCode <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+        </article>
+      </main>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="../assets/main.js"></script>
+  </body>
+</html>

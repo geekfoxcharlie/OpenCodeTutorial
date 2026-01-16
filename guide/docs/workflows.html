@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>实战工作流 - OpenCode 中文指南</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../assets/custom.css" />
+  </head>
+  <body class="bg-white">
+    <!-- Mobile Header -->
+    <div
+      class="md:hidden bg-slate-50 border-b border-slate-200 p-4 flex justify-between items-center"
+    >
+      <a href="../index.html" class="font-bold text-indigo-600"
+        >OpenCode Guide</a
+      >
+      <button
+        id="menuBtn"
+        class="p-2 text-slate-600 hover:bg-slate-200 rounded"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <div class="flex min-h-screen">
+      <!-- Sidebar -->
+      <aside
+        id="sidebar"
+        class="w-64 border-r border-slate-200 bg-slate-50 fixed inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 md:relative transition-transform duration-300"
+      >
+        <div class="p-6 sticky top-0 h-screen overflow-y-auto">
+          <a
+            href="../index.html"
+            class="text-xl font-bold text-indigo-600 mb-8 block"
+            >OpenCode Guide</a
+          >
+          <nav class="space-y-2">
+            <a href="intro.html" class="sidebar-link">1. 什么是 OpenCode？</a>
+            <a href="install.html" class="sidebar-link">2. 安装指南</a>
+            <a href="china-guide.html" class="sidebar-link"
+              >3. 国内特供版 <span class="tag">Hot</span></a
+            >
+            <a href="migration.html" class="sidebar-link">4. 从 Cursor 迁移</a>
+            <a href="configuration.html" class="sidebar-link">5. 详细配置</a>
+            <a href="workflows.html" class="sidebar-link active"
+              >6. 实战工作流</a
+            >
+            <a href="usage.html" class="sidebar-link">7. 常用技巧</a>
+            <a href="advanced.html" class="sidebar-link">8. 高级技巧</a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 px-4 py-12 md:px-12 lg:px-24">
+        <article class="prose max-w-4xl mx-auto">
+          <h1 class="text-4xl font-extrabold text-slate-900 mb-8">
+            第六章：实战工作流 —— 像专家一样提问
+          </h1>
+
+          <p class="text-lg">
+            学会了配置，接下来就是如何使用。这里有三个最典型的开发者场景，展示如何通过精准的
+            Prompt 让 OpenCode 为你工作。
+          </p>
+
+          <h2>场景一：重构遗留代码 (Refactor)</h2>
+          <div class="tip-box">
+            <strong>🎯 目标</strong>
+            <p class="m-0">
+              将一个巨大的 React Class Component 重构为 Functional
+              Component，并拆分出 hooks。
+            </p>
+          </div>
+
+          <p>
+            假设我们有一个老旧的组件 <code>BigLegacyTable.tsx</code>，充斥着
+            <code>any</code> 类型和生命周期逻辑：
+          </p>
+          <pre><code class="language-tsx">import React from 'react';
+
+class BigLegacyTable extends React.Component {
+  state = {
+    data: [],
+    loading: true
+  };
+
+  componentDidMount() {
+    fetch('/api/data').then(res => res.json()).then(data => {
+      this.setState({ data, loading: false });
+    });
+  }
+
+  render() {
+    const { data, loading } = this.state;
+    if (loading) return &lt;div&gt;Loading...&lt;/div&gt;;
+    return (
+      &lt;table&gt;
+        {data.map((item: any) => (
+          &lt;tr key={item.id}&gt;&lt;td&gt;{item.name}&lt;/td&gt;&lt;/tr&gt;
+        ))}
+      &lt;/table&gt;
+    );
+  }
+}
+
+export default BigLegacyTable;</code></pre>
+
+          <h3 class="text-slate-700">步骤 1: 投喂上下文</h3>
+          <p>不要直接说“重构这个文件”。先告诉它你的重构标准。</p>
+          <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 mb-4">
+            <p class="font-bold text-indigo-600 mb-2">User Prompt:</p>
+            <p class="font-mono text-sm text-slate-700">
+              @src/components/BigLegacyTable.tsx<br />
+              我要把这个组件重构为 Functional Component。<br />
+              要求：<br />
+              1. 把数据获取逻辑拆分到 @src/hooks/useTableData.ts 中。<br />
+              2. 使用 TypeScript 严格模式，补全所有 any 类型。<br />
+              3. 保持原有的 props 接口不变。<br />
+              先给我一个 Plan。
+            </p>
+          </div>
+
+          <div class="my-6">
+            <img
+              src="../pics/6.1_1.png"
+              alt="OpenCode Plan 输出示例"
+              class="rounded-lg shadow-md border border-slate-800 mx-auto"
+            />
+            <p class="text-center text-sm text-slate-500 mt-2">
+              OpenCode 输出的详细执行计划 (Plan)
+            </p>
+          </div>
+
+          <h3 class="text-slate-700">步骤 2: 执行与验证</h3>
+          <p>
+            确认 Plan 无误后，切换到 Build 模式执行。完成后，要求它运行检查。
+          </p>
+          <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 mb-4">
+            <p class="font-bold text-indigo-600 mb-2">User Prompt:</p>
+            <p class="font-mono text-sm text-slate-700">
+              看起来不错，开始执行。<br />
+              完成后，请运行 `npm run lint` 确保没有引入新的 lint 错误。
+            </p>
+          </div>
+
+          <h2>场景二：编写单元测试 (TDD)</h2>
+          <p>OpenCode 非常擅长写测试，尤其是当你给了它用例范本时。</p>
+          <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 mb-4">
+            <p class="font-bold text-indigo-600 mb-2">User Prompt:</p>
+            <p class="font-mono text-sm text-slate-700">
+              @src/utils/currencyFormatter.ts<br />
+              请为这个文件编写 Jest 测试用例。<br />
+              参考 @src/utils/__tests__/dateFormatter.test.ts 的写法。<br />
+              需要覆盖以下边缘情况：<br />
+              - 输入为 null 或 undefined<br />
+              - 输入为负数<br />
+              - 大数精度问题<br />
+              写完后直接运行 `npm test` 验证。
+            </p>
+          </div>
+
+          <h2>场景三：排查诡异 Bug (Debug)</h2>
+          <p>当遇到报错时，直接把错误日志甩给它，并配合相关文件。</p>
+          <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 mb-4">
+            <p class="font-bold text-indigo-600 mb-2">User Prompt:</p>
+            <p class="font-mono text-sm text-slate-700">
+              @src/api/user.ts @server/logs/error.log<br />
+              我看日志里一直报 "Cannot read property 'id' of undefined"。<br />
+              但这只在用户未登录时发生。<br />
+              请分析原因，并修复这个问题。修复时请加一个非空判断守卫。
+            </p>
+          </div>
+
+          <div class="mt-12 flex justify-between items-center">
+            <a
+              href="configuration.html"
+              class="text-indigo-600 font-semibold hover:underline"
+            >
+              <i class="fas fa-arrow-left mr-2"></i> 上一步：配置详解
+            </a>
+            <a
+              href="usage.html"
+              class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+            >
+              下一步：常用技巧 <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+        </article>
+      </main>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="../assets/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code&display=swap');
+
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+code { font-family: 'Fira Code', monospace !important; }
+
+/* 排版优化 */
+.prose h2 { font-weight: 700; font-size: 1.5rem; margin-top: 2.5rem; margin-bottom: 1.25rem; color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; display: flex; align-items: center; }
+.prose h3 { font-weight: 600; font-size: 1.25rem; margin-top: 2rem; margin-bottom: 1rem; color: #334155; }
+.prose p { margin-bottom: 1.25rem; color: #475569; line-height: 1.75; }
+.prose ul, .prose ol { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+.prose li { margin-bottom: 0.5rem; color: #475569; }
+
+/* 代码块 */
+pre { background: #1e293b !important; padding: 1.25rem !important; border-radius: 0.75rem !important; margin: 1.5rem 0 !important; overflow-x: auto !important; border: 1px solid #334155; }
+
+/* 侧边栏 */
+.sidebar-link { display: block; padding: 0.6rem 1rem; border-radius: 0.5rem; color: #64748b; transition: all 0.2s; font-size: 0.95rem; }
+.sidebar-link:hover:not(.active) { background: #f1f5f9; color: #0f172a; }
+.sidebar-link.active { background: #e0e7ff; color: #4338ca; font-weight: 600; border-left: 3px solid #4338ca; }
+
+/* 人工介入占位符 */
+.manual-action {
+    border: 2px dashed #f59e0b;
+    background-color: #fffbeb;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    margin: 2rem 0;
+    text-align: center;
+    color: #b45309;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+.manual-action i { font-size: 1.5rem; }
+.manual-action .label { font-weight: bold; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.manual-action .desc { font-size: 0.9rem; opacity: 0.9; }
+
+/* 提示块 */
+.tip-box { background-color: #f8fafc; border-left: 4px solid #6366f1; padding: 1rem 1.5rem; border-radius: 0 0.5rem 0.5rem 0; margin: 1.5rem 0; }
+.tip-box strong { display: block; color: #4338ca; margin-bottom: 0.25rem; }
+
+/* 标签 */
+.tag { background: #e0e7ff; color: #4338ca; padding: 0.1rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600; font-family: 'Inter', sans-serif; vertical-align: middle; margin-left: 0.5rem; }
