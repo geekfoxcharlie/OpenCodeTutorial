@@ -4,6 +4,47 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>配置详解 - OpenCode 中文指南</title>
+    <meta
+      name="description"
+      content="OpenCode 配置详解，重点讲解 opencode.json、provider、model、small_model、mcp 与 .opencode 目录。"
+    />
+    <meta
+      name="keywords"
+      content="OpenCode配置, opencode.json, provider, model, small_model, mcp"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="OpenCode 中文指南" />
+    <meta name="theme-color" content="#4f46e5" />
+    <link
+      rel="canonical"
+      href="https://opencode.it.com/guide/docs/configuration.html"
+    />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="OpenCode 中文指南" />
+    <meta property="og:title" content="配置详解 - OpenCode 中文指南" />
+    <meta
+      property="og:description"
+      content="OpenCode 配置详解，重点讲解 opencode.json、provider、model、small_model、mcp 与 .opencode 目录。"
+    />
+    <meta
+      property="og:url"
+      content="https://opencode.it.com/guide/docs/configuration.html"
+    />
+    <meta
+      property="og:image"
+      content="https://opencode.it.com/guide/pics/1.3_1.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="配置详解 - OpenCode 中文指南" />
+    <meta
+      name="twitter:description"
+      content="OpenCode 配置详解，重点讲解 opencode.json、provider、model、small_model、mcp 与 .opencode 目录。"
+    />
+    <meta
+      name="twitter:image"
+      content="https://opencode.it.com/guide/pics/1.3_1.png"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
@@ -16,7 +57,6 @@
     <link rel="stylesheet" href="../assets/custom.css" />
   </head>
   <body class="bg-white">
-    <!-- Mobile Header -->
     <div
       class="md:hidden bg-slate-50 border-b border-slate-200 p-4 flex justify-between items-center"
     >
@@ -32,7 +72,6 @@
     </div>
 
     <div class="flex min-h-screen">
-      <!-- Sidebar -->
       <aside
         id="sidebar"
         class="w-64 border-r border-slate-200 bg-slate-50 fixed inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 md:relative transition-transform duration-300"
@@ -56,113 +95,309 @@
             <a href="workflows.html" class="sidebar-link">6. 实战工作流</a>
             <a href="usage.html" class="sidebar-link">7. 常用技巧</a>
             <a href="advanced.html" class="sidebar-link">8. 高级技巧</a>
+            <a href="faq.html" class="sidebar-link"
+              >9. 常见问题 FAQ <span class="tag">New</span></a
+            >
           </nav>
         </div>
       </aside>
 
-      <!-- Main Content -->
       <main class="flex-1 px-4 py-12 md:px-12 lg:px-24">
         <article class="prose max-w-4xl mx-auto">
           <h1 class="text-4xl font-extrabold text-slate-900 mb-8">
-            第五章：配置详解 —— 定制你的专属 AI
+            第五章：配置详解 —— 用新版 schema 定制 OpenCode
           </h1>
 
           <p class="text-lg">
-            OpenCode 的强大在于其极高的可配置性。配置文件通常位于
-            <code>~/.config/opencode/config.json</code> (Linux/macOS) 或
-            <code>%APPDATA%/opencode/config.json</code> (Windows)。
+            这一章重点修正很多旧教程里的过时写法。2026 年的 OpenCode
+            配置核心关键词是
+            <code>opencode.json</code
+            >、<code>provider</code>、<code>model</code>、<code>small_model</code>、<code
+              >mcp</code
+            >
+            和 <code>.opencode</code> 目录。
           </p>
 
+          <h2>1. 配置文件放在哪里？</h2>
+          <p>官方文档明确支持多层配置，并且这些配置会合并，而不是简单覆盖。</p>
+          <ul class="list-disc pl-6 mb-6 space-y-3 text-slate-700">
+            <li>
+              <strong>全局配置</strong>：<code
+                >~/.config/opencode/opencode.json</code
+              >
+            </li>
+            <li>
+              <strong>项目配置</strong>：项目根目录下的
+              <code>opencode.json</code>
+            </li>
+            <li>
+              <strong>TUI 配置</strong>：<code
+                >~/.config/opencode/tui.json</code
+              >
+            </li>
+            <li>
+              <strong>项目扩展目录</strong
+              >：<code>.opencode/agents</code>、<code>.opencode/commands</code>、<code
+                >.opencode/skills</code
+              >
+            </li>
+          </ul>
+          <p>
+            OpenCode 同时支持 <strong>JSON</strong> 和 <strong>JSONC</strong>
+            。如果你想写注释，更推荐用 JSONC。
+          </p>
+
+          <h2>2. 一份最小可用配置</h2>
           <pre><code class="language-json">{
-  "providers": {
-    "opencode": { "id": "opencode" },
+  "$schema": "https://opencode.ai/config.json",
+  "model": "anthropic/claude-sonnet-4-5",
+  "small_model": "anthropic/claude-haiku-4-5",
+  "share": "manual"
+}</code></pre>
+          <p>
+            其中 <code>model</code> 是主力模型，<code>small_model</code>
+            是给标题生成、轻量任务等场景准备的更便宜模型。
+          </p>
+
+          <h2>3. 旧写法和新写法的区别</h2>
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 my-6">
+            <ul class="list-disc pl-6 space-y-3 text-slate-700 m-0">
+              <li>
+                现在官方文档使用的是 <code>provider</code>，不是很多旧文章里的
+                <code>providers</code>。
+              </li>
+              <li>
+                MCP 配置现在优先看 <code>mcp</code> 字段，而不是旧文章常写的
+                <code>mcpServers</code>。
+              </li>
+              <li>
+                模型 ID 的标准格式是
+                <code>provider_id/model_id</code>，不要再自己硬猜名字。
+              </li>
+              <li>
+                最稳妥的做法是先运行
+                <code>/models</code>，再把你确认可用的模型写进配置里。
+              </li>
+            </ul>
+          </div>
+
+          <h2>4. 常见配置场景</h2>
+
+          <h3>设置默认模型</h3>
+          <pre><code class="language-json">{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "opencode/gpt-5.1-codex"
+}</code></pre>
+          <p>
+            如果你使用 OpenCode Zen，这种写法最直观。其他 provider
+            同理，格式都是
+            <code>provider/model</code>。
+          </p>
+
+          <h3>给内置 provider 指定 baseURL</h3>
+          <pre><code class="language-json">{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
     "openai": {
-      "id": "openai",
-      "args": { "apiKey": "sk-..." }
-    }
-  },
-  "models": {
-    "default": "opencode/default"
-  }
-}</code></pre>
-
-          <h2>1. 接入 DeepSeek Coder V3 (高性价比)</h2>
-          <p>
-            DeepSeek 是目前最适合编程的高性价比模型。你可以通过 OpenRouter 或
-            DeepSeek 官方 API 接入。
-          </p>
-          <pre><code class="language-json">{
-  "providers": {
-    "deepseek": {
-      "id": "openai",
-      "args": {
-        "baseUrl": "https://api.deepseek.com/v1",
-        "apiKey": "sk-your-deepseek-key",
-        "models": {
-          "coder": { "id": "deepseek-coder" },
-          "chat": { "id": "deepseek-chat" }
-        }
-      }
-    }
-  },
-  "models": {
-    "default": "deepseek/coder"
-  }
-}</code></pre>
-
-          <h2>2. 接入本地 Ollama (隐私优先)</h2>
-          <p>
-            如果你拥有强劲的本地显卡（如 RTX 4090），可以使用 Ollama 运行 Llama
-            3 或 DeepSeek 本地版，实现完全免费且隐私的编程助手。
-          </p>
-          <pre><code class="language-json">{
-  "providers": {
-    "ollama": {
-      "id": "openai",
-      "args": {
-        "baseUrl": "http://localhost:11434/v1",
-        "apiKey": "ollama",
-        "models": {
-          "llama3": { "id": "llama3:70b" },
-          "deepseek": { "id": "deepseek-coder:33b" }
-        }
+      "options": {
+        "baseURL": "https://your-gateway.example.com/v1"
       }
     }
   }
 }</code></pre>
-
-          <h2>3. 设置别名 (Aliases)</h2>
           <p>
-            不想每次都打
-            <code>anthropic/claude-3-5-sonnet-20240620</code>
-            这么长？设置别名吧。
+            这适合你接入代理网关、企业统一中转层或 OpenAI
+            兼容接口。模型名字仍然要以
+            <code>/models</code> 显示结果为准。
           </p>
+
+          <h3>给 provider 配置全局请求选项</h3>
           <pre><code class="language-json">{
-  "models": {
-    "sonnet": "anthropic/claude-3-5-sonnet-20240620",
-    "gpt4o": "openai/gpt-4o",
-    "ds": "deepseek/coder"
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "anthropic": {
+      "options": {
+        "timeout": 600000,
+        "chunkTimeout": 30000,
+        "setCacheKey": true
+      }
+    }
   }
 }</code></pre>
           <p>
-            设置后，你可以在启动时直接使用：<code>opencode --model sonnet</code
-            >。
+            这是新版 schema 里已经明确支持的通用 provider
+            级配置，适合网络不稳定或流式返回较慢的环境。
+          </p>
+
+          <h3>把主力模型和轻量模型分开</h3>
+          <pre><code class="language-json">{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "anthropic/claude-sonnet-4-5",
+  "small_model": "anthropic/claude-haiku-4-5"
+}</code></pre>
+          <p>
+            这是非常值得新手尽早掌握的配置技巧。复杂任务交给主力模型，标题生成、轻量总结之类的小任务交给
+            <code>small_model</code>，通常能在不明显损失体验的前提下降低成本。
+          </p>
+
+          <h3>把敏感信息从配置文件里拆出去</h3>
+          <pre><code class="language-json">{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "anthropic": {
+      "options": {
+        "apiKey": "{env:ANTHROPIC_API_KEY}"
+      }
+    }
+  }
+}</code></pre>
+          <p>
+            官方配置支持 <code>{env:变量名}</code> 和
+            <code>{file:路径}</code> 两种变量替换。对团队协作来说，这是比把 API
+            Key 直接写进 <code>opencode.json</code> 更安全的做法。
+          </p>
+          <ul class="list-disc pl-6 mb-6 space-y-3 text-slate-700">
+            <li>
+              <strong>`AGENTS.md`</strong>：描述项目背景、约束、代码规范。
+            </li>
+            <li>
+              <strong>`opencode.json`</strong
+              >：项目级默认模型、权限、MCP、命令。
+            </li>
+            <li><strong>`.opencode/agents`</strong>：自定义代理。</li>
+            <li>
+              <strong>`.opencode/commands`</strong>：把重复任务封装成命令。
+            </li>
+            <li><strong>`.opencode/skills`</strong>：补充团队专属能力。</li>
+          </ul>
+          <p>
+            官方文档还特别说明：这些目录现在以<strong>复数命名</strong>为主，例如
+            <code>agents/</code>、<code>commands/</code>、<code>skills/</code>。
+            单数目录还兼容，但已经属于向后兼容路径。
+          </p>
+
+          <h2>6. 高需求配置技巧</h2>
+
+          <h3>技巧一：把“个人偏好”和“项目规则”分开</h3>
+          <ul class="list-disc pl-6 mb-6 space-y-3 text-slate-700">
+            <li>
+              <strong>全局配置</strong
+              >：放你个人常用模型、主题、快捷键、全局插件。
+            </li>
+            <li>
+              <strong>项目配置</strong>：放这个仓库必须统一的内容，例如默认
+              agent、watcher ignore、MCP、instructions。
+            </li>
+            <li>
+              <strong>`AGENTS.md`</strong
+              >：写人类规范和上下文，不要把所有规则都硬塞进 JSON。
+            </li>
+          </ul>
+          <p>
+            很多用户觉得“配置越来越乱”，本质上是把个人习惯、团队要求和一次性实验全堆在一个文件里。
+          </p>
+
+          <h3>技巧二：给大仓库配置 watcher ignore</h3>
+          <pre><code class="language-json">{
+  "$schema": "https://opencode.ai/config.json",
+  "watcher": {
+    "ignore": ["node_modules/**", "dist/**", ".git/**", ".next/**"]
+  }
+}</code></pre>
+          <p>
+            对前端、Monorepo
+            或构建输出较多的项目，这能明显减少噪音。用户体感上会更像“OpenCode
+            更懂项目”，其实背后经常只是你把无关目录排除了。
+          </p>
+
+          <h3>技巧三：先收紧权限，再慢慢放开</h3>
+          <pre><code class="language-json">{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "edit": "ask",
+    "bash": "ask"
+  }
+}</code></pre>
+          <p>
+            对刚开始用 OpenCode 的用户，这个配置特别有价值。它能让你先观察
+            OpenCode 想怎么改、想执行什么命令，再逐步把信任建立起来。
+          </p>
+
+          <h3>技巧四：用 instructions 管团队规范</h3>
+          <pre><code class="language-json">{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": ["CONTRIBUTING.md", "docs/guidelines.md", ".cursor/rules/*.md"]
+}</code></pre>
+          <p>
+            如果你的团队已经有 Cursor
+            Rules、贡献规范或测试约定，不需要重写一份新的 Prompt，直接通过
+            <code>instructions</code> 引入通常更稳。
+          </p>
+
+          <h2>7. MCP 配置的正确方向</h2>
+          <p>
+            如果你想让 OpenCode 直接连接
+            Jira、浏览器、数据库或内部平台，先记住一条：
+            <strong>新版官方配置文档使用的是 <code>mcp</code> 字段</strong>。
+          </p>
+          <pre><code class="language-json">{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "jira": {
+      "type": "remote",
+      "url": "https://jira.example.com/mcp",
+      "enabled": true
+    }
+  }
+}</code></pre>
+          <p>
+            如果你接的是本地 MCP server，请优先对照当前官方 schema
+            或文档示例来写，不要直接复制旧博客里的
+            <code>mcpServers</code> 模板。遇到配置冲突时，可以运行
+            <code>opencode debug config</code> 检查最终生效结果。
           </p>
 
           <div class="tip-box">
-            <strong>💡 提示</strong>
+            <strong>💡 推荐原则</strong>
             <p class="m-0">
-              修改配置文件后，无需重启终端，但在 OpenCode
-              交互界面中可能需要重启会话才能生效。
+              新手优先用 <code>/connect</code> + <code>/models</code> 完成
+              provider 和模型选择，只在需要统一网关、团队默认规则或 MCP
+              扩展时再写配置文件。
             </p>
+          </div>
+
+          <h2>8. 高频踩坑与排错清单</h2>
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 my-6">
+            <ul class="list-disc pl-6 space-y-3 text-slate-700 m-0">
+              <li>
+                <strong>“为什么我明明写了配置却没生效？”</strong>
+                先怀疑优先级覆盖问题，再运行
+                <code>opencode debug config</code> 看最终结果。
+              </li>
+              <li>
+                <strong>“为什么模型列表和我想的不一样？”</strong>
+                先执行
+                <code>/models</code> 看实际可用模型，不要只靠博客抄模型名。
+              </li>
+              <li>
+                <strong>“为什么插件装了没反应？”</strong>
+                检查它到底是通过 npm 的 <code>plugin</code> 加载，还是放在了
+                <code>.opencode/plugins/</code> 目录里。
+              </li>
+              <li>
+                <strong>“为什么项目越来越卡？”</strong>
+                优先排查 watcher ignore、插件数量、MCP
+                数量和上下文体积，而不是一味换模型。
+              </li>
+            </ul>
           </div>
 
           <div class="mt-12 flex justify-between items-center">
             <a
-              href="install.html"
+              href="migration.html"
               class="text-indigo-600 font-semibold hover:underline"
             >
-              <i class="fas fa-arrow-left mr-2"></i> 上一步：快速上手
+              <i class="fas fa-arrow-left mr-2"></i> 上一步：从 Cursor 迁移
             </a>
             <a
               href="workflows.html"

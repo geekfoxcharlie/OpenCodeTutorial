@@ -3,7 +3,54 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>进阶专题：MCP 与模型选择 - OpenCode 中文指南</title>
+    <title>进阶专题：Agents、Commands 与 MCP - OpenCode 中文指南</title>
+    <meta
+      name="description"
+      content="OpenCode 高级技巧，讲解自定义 agents、commands、skills、MCP 接入以及 opencode debug config 的高级用法。"
+    />
+    <meta
+      name="keywords"
+      content="OpenCode高级教程, OpenCode agents, OpenCode commands, skills, MCP"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="OpenCode 中文指南" />
+    <meta name="theme-color" content="#4f46e5" />
+    <link
+      rel="canonical"
+      href="https://opencode.it.com/guide/docs/advanced.html"
+    />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="OpenCode 中文指南" />
+    <meta
+      property="og:title"
+      content="进阶专题：Agents、Commands 与 MCP - OpenCode 中文指南"
+    />
+    <meta
+      property="og:description"
+      content="OpenCode 高级技巧，讲解自定义 agents、commands、skills、MCP 接入以及 opencode debug config 的高级用法。"
+    />
+    <meta
+      property="og:url"
+      content="https://opencode.it.com/guide/docs/advanced.html"
+    />
+    <meta
+      property="og:image"
+      content="https://opencode.it.com/guide/pics/1.3_1.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="进阶专题：Agents、Commands 与 MCP - OpenCode 中文指南"
+    />
+    <meta
+      name="twitter:description"
+      content="OpenCode 高级技巧，讲解自定义 agents、commands、skills、MCP 接入以及 opencode debug config 的高级用法。"
+    />
+    <meta
+      name="twitter:image"
+      content="https://opencode.it.com/guide/pics/1.3_1.png"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
@@ -16,7 +63,6 @@
     <link rel="stylesheet" href="../assets/custom.css" />
   </head>
   <body class="bg-white">
-    <!-- Mobile Header -->
     <div
       class="md:hidden bg-slate-50 border-b border-slate-200 p-4 flex justify-between items-center"
     >
@@ -32,7 +78,6 @@
     </div>
 
     <div class="flex min-h-screen">
-      <!-- Sidebar -->
       <aside
         id="sidebar"
         class="w-64 border-r border-slate-200 bg-slate-50 fixed inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 md:relative transition-transform duration-300"
@@ -54,150 +99,304 @@
             <a href="workflows.html" class="sidebar-link">6. 实战工作流</a>
             <a href="usage.html" class="sidebar-link">7. 常用技巧</a>
             <a href="advanced.html" class="sidebar-link active">8. 高级技巧</a>
+            <a href="faq.html" class="sidebar-link"
+              >9. 常见问题 FAQ <span class="tag">New</span></a
+            >
           </nav>
         </div>
       </aside>
 
-      <!-- Main Content -->
       <main class="flex-1 px-4 py-12 md:px-12 lg:px-24">
         <article class="prose max-w-4xl mx-auto">
           <h1 class="text-4xl font-extrabold text-slate-900 mb-8">
-            第八章：高手进阶 —— 探索无限可能
+            第八章：高手进阶 —— Agents、Commands、Skills 与 MCP
           </h1>
 
-          <h2>1. 模型选择：逻辑还是性价比？</h2>
-          <p>
-            OpenCode
-            的一大魅力在于你可以随时更换“大脑”。中文社区的成熟经验是<strong>“混用策略”</strong>：
+          <p class="text-lg">
+            这一章把过时的社区“偏方”清理掉，改成 2026 年仍然可靠的官方高级玩法：
+            <strong>自定义 agent</strong>、<strong>自定义 command</strong
+            >、<strong>.opencode 目录扩展</strong>、<strong>MCP 接入</strong>。
           </p>
-          <ul class="list-disc pl-6 mb-6 space-y-4 text-slate-600">
-            <li>
-              <strong>Claude 3.5 Sonnet</strong>:
-              <span class="tag">逻辑之王</span> 适合复杂重构、架构设计和疑难
-              Bug。
-            </li>
-            <li>
-              <strong>DeepSeek Coder V3</strong>:
-              <span class="tag">性价比之选</span>
-              适合日常增删改查、编写单测，通过本地或中转 API 接入，成本极低。
-            </li>
-          </ul>
 
-          <h2>2. Oh My OpenCode 与 ULW 模式</h2>
+          <h2>1. build / plan 之外，你还能自定义 agent</h2>
           <p>
-            如果你安装了
-            <strong>Oh My OpenCode</strong> 增强插件，你将解锁更强大的功能：
-          </p>
-          <ul class="list-disc pl-6 mb-6 space-y-4 text-slate-600">
-            <li>
-              <strong>ULW (UltraWork) 模式</strong>:
-              开启多代理协作模式。当你需要完成一个跨模块的大型任务时，ULW
-              会自动调度研究、设计、编码等多个子智能体并行工作。
-            </li>
-            <li>
-              <strong>/ralph-loop</strong>:
-              进入“死磕模式”。智能体会不断尝试运行测试、修复报错，直到代码完全跑通为止。
-            </li>
-          </ul>
-
-          <h2>3. Windows 用户避坑指南</h2>
-          <div class="bg-red-50 border-l-4 border-red-500 p-4 my-6">
-            <ul class="list-disc pl-5 text-sm text-red-800 space-y-2">
-              <li><strong>优先使用 WSL2</strong>：这是最顺畅的体验方式。</li>
-              <li>
-                <strong>证书错误</strong>：如果登录时遇到 TLS 报错，可尝试设置
-                <code>set NODE_TLS_REJECT_UNAUTHORIZED=0</code>。
-              </li>
-              <li>
-                <strong>剪贴板权限</strong>：在 Linux
-                下如果无法粘贴，请确保安装了 <code>xclip</code> (X11) 或
-                <code>wl-clipboard</code> (Wayland)。
-              </li>
-            </ul>
-          </div>
-
-          <h2>4. 定制化：Rules 与 Skills</h2>
-          <p>这是让 OpenCode 真正“听懂人话”的关键。</p>
-
-          <h3>Rules: 让 AI 遵守团队规范</h3>
-          <p>
-            在项目根目录创建
-            <code>.opencode/rules.md</code>。这是最简单但最有效的定制方式。
-          </p>
-          <pre><code class="language-markdown"># 项目编码规范
-
-1. **语言要求**:
-   - 必须使用 TypeScript 严格模式。
-   - 所有变量名使用 camelCase。
-   
-2. **测试要求**:
-   - 每次修改组件后，必须运行相关测试。
-   - 必须使用 React Testing Library。
-
-3. **提交规范**:
-   - Commit message 必须遵循 Conventional Commits (feat, fix, docs)。
-</code></pre>
-
-          <h3>Skills: 给 AI 安装新技能</h3>
-          <p>
-            Skills 本质上是一段封装好的 Prompt 或脚本。你可以用 YAML 定义技能。
-          </p>
-          <pre><code class="language-yaml"># .opencode/skills/browser-test.md
----
-name: browser-test
-description: 使用 Playwright 运行浏览器测试
-tools: [bash]
----
-请执行以下步骤进行浏览器测试：
-1. 运行 `npx playwright test $ARGS`
-2. 如果失败，读取 `playwright-report/index.html` 并分析原因。
-</code></pre>
-
-          <h2>5. MCP 实战配置</h2>
-          <p>
-            以最常用的 <strong>PostgreSQL</strong> 和
-            <strong>Browser</strong> 插件为例：
+            OpenCode 默认内置 <strong>build</strong> 和 <strong>plan</strong>
+            两个 primary agent；你也可以通过配置增加自己的专用 agent。
           </p>
           <pre><code class="language-json">{
-  "mcpServers": {
-    "postgres": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://user:pass@localhost:5432/db"]
-    },
-    "browser": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-puppeteer"]
+  "$schema": "https://opencode.ai/config.json",
+  "agent": {
+    "code-reviewer": {
+      "description": "专门做代码评审",
+      "model": "anthropic/claude-sonnet-4-5",
+      "prompt": "You are a code reviewer. Focus on correctness, security, and maintainability.",
+      "tools": {
+        "write": false,
+        "edit": false
+      }
+    }
+  },
+  "default_agent": "build"
+}</code></pre>
+          <p>
+            你也可以把 agent 写成 markdown 文件，放进
+            <code>.opencode/agents</code> 或
+            <code>~/.config/opencode/agents</code>
+            目录中。
+          </p>
+
+          <h2>2. 用 commands 把重复任务模板化</h2>
+          <p>
+            当你经常让 OpenCode
+            做某类固定动作，例如“跑测试并解释失败原因”，最好的做法不是每次重打一遍，而是定义
+            command。
+          </p>
+          <pre><code class="language-json">{
+  "$schema": "https://opencode.ai/config.json",
+  "command": {
+    "test": {
+      "template": "Run the full test suite, summarize failures, and propose fixes.",
+      "description": "运行测试并总结失败原因",
+      "agent": "build"
     }
   }
 }</code></pre>
           <p>
-            配置完成后，你就可以直接说：“查询 Users 表中最近注册的 10 个用户” 或
-            “访问 React 官网查一下最新的 Hook 文档”。
+            这是用户需求很高的一类内容，因为它能把“Prompt
+            技巧”沉淀成团队资产。你不需要每次都重新描述“跑测试并总结问题”，而是可以直接用
+            <code>/test</code> 这类自定义命令。
           </p>
 
-          <h2>5. Oh My OpenCode 特色：ULW 模式</h2>
-          <p>
-            作为资深用户，你不能错过 <strong>Oh My OpenCode</strong> 插件带来的
-            <strong>UltraWork (ULW)</strong>
-            模式。它不仅是单兵作战，更是“特种部队”：
-          </p>
-          <ul class="list-disc pl-6 mb-6 space-y-2 text-slate-600">
+          <h3>推荐优先做的 3 个命令</h3>
+          <ul class="list-disc pl-6 mb-6 space-y-3 text-slate-700">
+            <li><strong>`/test`</strong>：运行测试并总结失败原因。</li>
             <li>
-              <strong>多代理并发</strong>：同时调用 Explore、Librarian 和 Oracle
-              代理，速度提升 300%。
+              <strong>`/review-changes`</strong>：读取最近提交或
+              diff，生成评审意见。
             </li>
             <li>
-              <strong>深度代码库探索</strong>：使用 AST-grep
-              深入语法树级别理解你的代码。
+              <strong>`/ship-check`</strong>：发布前检查 lint、test、env
+              和关键路径。
             </li>
           </ul>
+
+          <h3>命令文件版比 JSON 更好维护</h3>
+          <pre><code class="language-markdown">---
+description: Review recent changes
+agent: plan
+---
+
+Recent git commits:
+!`git log --oneline -10`
+
+Review these changes and point out risks, regressions, and missing tests.</code></pre>
+          <p>
+            对团队来说，把命令写在 <code>.opencode/commands/*.md</code>
+            往往比塞进一个很长的 JSON 更容易维护，也更适合代码评审。
+          </p>
+
+          <h2>3. `.opencode` 目录是项目级定制中心</h2>
+          <p>新版文档已经明确推荐使用复数目录名。最常见的结构包括：</p>
+          <ul class="list-disc pl-6 mb-6 space-y-3 text-slate-700">
+            <li><code>.opencode/agents</code>：自定义 agent</li>
+            <li><code>.opencode/commands</code>：项目命令模板</li>
+            <li><code>.opencode/skills</code>：扩展技能来源</li>
+            <li><code>.opencode/plugins</code>：插件扩展</li>
+            <li><code>.opencode/themes</code>：主题和界面扩展</li>
+          </ul>
+          <p>单数目录虽然还能兼容，但已经不建议作为新项目的主写法。</p>
+
+          <h2>4. Plugins：把 OpenCode 变成团队专属工具</h2>
+          <p>
+            插件是 2026 年特别值得补充的内容。很多教程会提到
+            MCP，但真正能让重度用户形成粘性的，往往是插件和命令的组合。
+          </p>
+
+          <h3>两种加载方式</h3>
+          <ul class="list-disc pl-6 mb-6 space-y-3 text-slate-700">
+            <li>
+              <strong>本地插件</strong>：放进 <code>.opencode/plugins/</code> 或
+              <code>~/.config/opencode/plugins/</code>
+            </li>
+            <li>
+              <strong>npm 插件</strong>：通过 <code>plugin</code> 数组从 npm
+              加载
+            </li>
+          </ul>
+          <pre><code class="language-json">{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": [
+    "opencode-helicone-session",
+    "opencode-wakatime",
+    "@my-org/custom-plugin"
+  ]
+}</code></pre>
+
+          <h3>插件最常见的 4 个用途</h3>
+          <ul class="list-disc pl-6 mb-6 space-y-3 text-slate-700">
+            <li><strong>通知</strong>：任务完成时发系统通知。</li>
+            <li><strong>安全防护</strong>：阻止读取 `.env` 或敏感文件。</li>
+            <li>
+              <strong>环境注入</strong>：在 shell 中自动注入统一环境变量。
+            </li>
+            <li>
+              <strong>自定义工具</strong>：给 OpenCode 添加你自己的 tool。
+            </li>
+          </ul>
+
+          <h3>一个很实用的本地插件例子</h3>
+          <pre><code class="language-javascript">export const EnvProtection = async () => {
+  return {
+    "tool.execute.before": async (input, output) => {
+      if (input.tool === "read" && output.args.filePath.includes(".env")) {
+        throw new Error("Do not read .env files")
+      }
+    },
+  }
+}</code></pre>
+          <p>
+            这类插件非常适合企业项目，因为它解决的是“安全边界”问题，而不是纯粹的功能炫技。
+          </p>
+
+          <h3>社区增强插件怎么看？</h3>
+          <p>
+            除了官方插件机制，社区里也有一些增强套件，比如专注于多智能体协作、任务编排、会话增强的项目。我的建议是：
+          </p>
+          <ul class="list-disc pl-6 mb-6 space-y-3 text-slate-700">
+            <li>先掌握官方插件系统，再尝试社区增强包。</li>
+            <li>先看它是否基于当前版本 OpenCode，避免照抄过时教程。</li>
+            <li>优先安装“解决具体问题”的插件，而不是一次装一堆花哨增强。</li>
+          </ul>
+
+          <h2>5. Skills 与 Agents：给不同任务不同人格</h2>
+          <p>
+            高级用户普遍会把“写代码”“做评审”“查文档”“排故障”拆成不同
+            agent，而不是永远只用默认 build。
+          </p>
+
+          <h3>为什么这比一个万能 Prompt 更强？</h3>
+          <ul class="list-disc pl-6 mb-6 space-y-3 text-slate-700">
+            <li>你可以给 review agent 更严格的权限限制。</li>
+            <li>你可以让 plan agent 用更便宜、偏分析的模型。</li>
+            <li>你可以把高频任务做成可复用的团队模板。</li>
+          </ul>
+
+          <h3>推荐先做的 3 个自定义 agent</h3>
+          <ul class="list-disc pl-6 mb-6 space-y-3 text-slate-700">
+            <li>
+              <strong>code-reviewer</strong>：只读、偏严格、关注风险和测试缺口。
+            </li>
+            <li>
+              <strong>docs-writer</strong>：专门生成文档、变更说明和发布说明。
+            </li>
+            <li><strong>debugger</strong>：可以跑命令，但不允许随便写文件。</li>
+          </ul>
+
+          <h3>权限是高级玩法的核心</h3>
+          <pre><code class="language-json">{
+  "$schema": "https://opencode.ai/config.json",
+  "agent": {
+    "review": {
+      "mode": "subagent",
+      "permission": {
+        "edit": "deny",
+        "bash": {
+          "*": "ask",
+          "git diff *": "allow",
+          "git log *": "allow"
+        }
+      }
+    }
+  }
+}</code></pre>
+          <p>
+            这类配置的价值很大，因为它能让团队放心地“开更多
+            agent”，而不是担心每个 agent 都有满权限。
+          </p>
+
+          <h2>6. MCP：连接外部系统的正式入口</h2>
+          <p>
+            对 OpenCode 来说，MCP
+            的价值是把“聊天”升级成“会调工具的执行环境”。例如接
+          </p>
+
+          <pre><code class="language-json">{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "jira": {
+      "type": "remote",
+      "url": "https://jira.example.com/mcp",
+      "enabled": true
+    }
+  }
+}</code></pre>
+          <p>
+            这里需要特别记住：<strong
+              >官方文档已经明确使用 <code>mcp</code></strong
+            >
+            ，而不是很多旧文章里的
+            <code>mcpServers</code>。如果你在升级旧配置，优先对照当前 schema
+            调整。
+          </p>
+
+          <h3>最值得先接的 3 类 MCP</h3>
+          <ul class="list-disc pl-6 mb-6 space-y-3 text-slate-700">
+            <li>
+              <strong>浏览器类</strong>：用来验页面、点按钮、复现前端问题。
+            </li>
+            <li>
+              <strong>数据库类</strong>：用来查数据、验证修复、补充上下文。
+            </li>
+            <li>
+              <strong>项目管理类</strong>：例如 Jira、飞书、内部任务系统。
+            </li>
+          </ul>
+
+          <h2>7. 调试配置时别靠猜</h2>
+          <p>
+            一旦你开始混用全局配置、项目配置、`.opencode`
+            目录和远程默认配置，最容易踩坑的就是“我以为它读到了，实际上没有”。这时最好直接运行：
+          </p>
+          <pre><code class="language-bash">opencode debug config</code></pre>
+          <p>
+            这个命令能帮助你看到最终合并后的真实配置，尤其适合排查 MCP
+            没生效、默认模型不对、agent 没被识别等问题。
+          </p>
+
+          <h2>8. 高级用户还会用到什么？</h2>
+          <ul class="list-disc pl-6 mb-6 space-y-3 text-slate-700">
+            <li><strong>`/share`</strong>：把会话分享给团队成员复盘。</li>
+            <li>
+              <strong>桌面版 / IDE 扩展</strong>：适合不想只待在纯终端里的用户。
+            </li>
+            <li>
+              <strong>`opencode serve` / `opencode web`</strong>：把 OpenCode
+              暴露成可被其他客户端调用的服务。
+            </li>
+            <li>
+              <strong>`tui.json`</strong>：主题、滚动速度、快捷键等界面级配置。
+            </li>
+            <li>
+              <strong>插件加载顺序</strong
+              >：全局配置、项目配置、全局插件目录、项目插件目录，会影响谁覆盖谁。
+            </li>
+          </ul>
+
+          <div class="tip-box">
+            <strong>💡 进阶顺序建议</strong>
+            <p class="m-0">
+              真正有价值的升级顺序通常是：先把
+              <code>AGENTS.md</code> 和项目提示词写好，再抽出
+              commands，最后再接入 MCP。不要一上来就堆十几个工具。
+            </p>
+          </div>
 
           <div class="mt-12 flex justify-between items-center">
             <a
               href="usage.html"
               class="text-indigo-600 font-semibold hover:underline"
             >
-              <i class="fas fa-arrow-left mr-2"></i> 上一步：实战技巧
+              <i class="fas fa-arrow-left mr-2"></i> 上一步：常用技巧
             </a>
             <a
               href="../index.html"
@@ -209,6 +408,9 @@ tools: [bash]
         </article>
       </main>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
     <script src="../assets/main.js"></script>
   </body>
 </html>

@@ -3,7 +3,54 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>快速上手：安装与配置 - OpenCode 中文指南</title>
+    <title>快速上手：安装与初始化 - OpenCode 中文指南</title>
+    <meta
+      name="description"
+      content="OpenCode 安装与初始化指南，包含安装脚本、npm、Homebrew、Windows、Docker、/connect、/models 与 /init 最新流程。"
+    />
+    <meta
+      name="keywords"
+      content="OpenCode安装, OpenCode初始化, /connect, /models, /init, OpenCode教程"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="OpenCode 中文指南" />
+    <meta name="theme-color" content="#4f46e5" />
+    <link
+      rel="canonical"
+      href="https://opencode.it.com/guide/docs/install.html"
+    />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="OpenCode 中文指南" />
+    <meta
+      property="og:title"
+      content="快速上手：安装与初始化 - OpenCode 中文指南"
+    />
+    <meta
+      property="og:description"
+      content="OpenCode 安装与初始化指南，包含安装脚本、npm、Homebrew、Windows、Docker、/connect、/models 与 /init 最新流程。"
+    />
+    <meta
+      property="og:url"
+      content="https://opencode.it.com/guide/docs/install.html"
+    />
+    <meta
+      property="og:image"
+      content="https://opencode.it.com/guide/pics/1.3_1.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="快速上手：安装与初始化 - OpenCode 中文指南"
+    />
+    <meta
+      name="twitter:description"
+      content="OpenCode 安装与初始化指南，包含安装脚本、npm、Homebrew、Windows、Docker、/connect、/models 与 /init 最新流程。"
+    />
+    <meta
+      name="twitter:image"
+      content="https://opencode.it.com/guide/pics/1.3_1.png"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
@@ -16,7 +63,6 @@
     <link rel="stylesheet" href="../assets/custom.css" />
   </head>
   <body class="bg-white">
-    <!-- Mobile Header -->
     <div
       class="md:hidden bg-slate-50 border-b border-slate-200 p-4 flex justify-between items-center"
     >
@@ -32,7 +78,6 @@
     </div>
 
     <div class="flex min-h-screen">
-      <!-- Sidebar -->
       <aside
         id="sidebar"
         class="w-64 border-r border-slate-200 bg-slate-50 fixed inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 md:relative transition-transform duration-300"
@@ -54,82 +99,168 @@
             <a href="workflows.html" class="sidebar-link">6. 实战工作流</a>
             <a href="usage.html" class="sidebar-link">7. 常用技巧</a>
             <a href="advanced.html" class="sidebar-link">8. 高级技巧</a>
+            <a href="faq.html" class="sidebar-link"
+              >9. 常见问题 FAQ <span class="tag">New</span></a
+            >
           </nav>
         </div>
       </aside>
 
-      <!-- Main Content -->
       <main class="flex-1 px-4 py-12 md:px-12 lg:px-24">
         <article class="prose max-w-4xl mx-auto">
           <h1 class="text-4xl font-extrabold text-slate-900 mb-8">
-            第二章：快速上手 —— 安装与配置
+            第二章：快速上手 —— 安装、连接模型与初始化项目
           </h1>
 
-          <h2>1. 安装 OpenCode</h2>
-          <p>OpenCode 支持全平台安装。最简单的方法是使用安装脚本：</p>
-          <pre><code class="language-bash">curl -fsSL https://opencode.ai/install | bash</code></pre>
+          <p class="text-lg">
+            这章按 2026 年官方文档整理成最稳妥的一条路线：
+            <strong>安装 OpenCode</strong> → <strong>运行 `/connect`</strong> →
+            <strong>选择模型</strong> →
+            <strong>进入项目后执行 `/init`</strong>。
+          </p>
 
-          <h3 class="font-bold text-slate-800 mb-2">针对不同平台的补充：</h3>
-          <ul class="list-disc pl-6 mb-6 text-slate-600">
+          <h2>1. 安装前准备</h2>
+          <ul class="list-disc pl-6 mb-6 space-y-3 text-slate-700">
+            <li>一款现代终端，例如 WezTerm、Ghostty、Kitty、Alacritty。</li>
             <li>
-              <strong>macOS (Homebrew)</strong>:
-              <code>brew install anomalyco/tap/opencode</code>
+              至少一个可用的 LLM 提供商账号或 API Key。新手可先从 OpenCode Zen
+              开始。
             </li>
             <li>
-              <strong>Windows</strong>: <code>choco install opencode</code> 或
-              <code>scoop install extras/opencode</code>
-            </li>
-            <li>
-              <strong>Docker</strong>:
-              <code>docker run -it --rm ghcr.io/anomalyco/opencode</code>
+              Windows 用户可以原生安装，但官方仍然建议优先使用 WSL
+              获取更完整体验。
             </li>
           </ul>
 
-          <h2>2. 配置 LLM 服务商</h2>
+          <h2>2. 安装 OpenCode</h2>
+          <p>最简单的方法仍然是官方安装脚本：</p>
+          <pre><code class="language-bash">curl -fsSL https://opencode.ai/install | bash</code></pre>
+
+          <h3>包管理器安装</h3>
+          <pre><code class="language-bash"># Node.js 生态
+npm install -g opencode-ai
+bun install -g opencode-ai
+pnpm install -g opencode-ai
+yarn global add opencode-ai
+
+# macOS / Linux（官方推荐保持最新）
+brew install anomalyco/tap/opencode
+
+# Arch Linux
+sudo pacman -S opencode
+paru -S opencode-bin</code></pre>
+
+          <h3>Windows 安装</h3>
+          <pre><code class="language-bash">choco install opencode
+scoop install opencode
+npm install -g opencode-ai
+mise use -g github:anomalyco/opencode</code></pre>
+
+          <h3>Docker 与桌面版</h3>
+          <pre><code class="language-bash">docker run -it --rm ghcr.io/anomalyco/opencode</code></pre>
           <p>
-            初次启动建议使用
-            <strong>OpenCode Zen</strong
-            >，这是官方提供的模型中转服务，经过深度优化。
-          </p>
-          <ol class="list-decimal pl-6 mb-6 space-y-4 text-slate-600">
-            <li>在终端输入 <code>opencode</code> 启动。</li>
-            <li>执行命令 <code>/connect</code>。</li>
-            <li>
-              在弹出的界面中选择
-              <strong>opencode</strong>，跳转到浏览器登录并获取 API Key。
-            </li>
-            <li>回到终端粘贴 Key 即可完成。</li>
-          </ol>
-          <p>
-            如果你想使用自己的 API（如 Claude 3.5 Sonnet 或
-            DeepSeek），可以编辑配置文件
-            <code>~/.config/opencode/config.json</code>。
+            除了终端版，OpenCode 现在也提供桌面版 Beta 和 VS
+            Code、Cursor、Zed、Windsurf、VSCodium
+            扩展入口。如果你不想从纯终端开始，可以直接走桌面版或 IDE 路线。
           </p>
 
-          <h2>3. 项目初始化</h2>
-          <p>进入你的项目目录，运行初始化命令：</p>
-          <pre><code class="language-bash">cd /your/project/path
+          <div class="tip-box">
+            <strong>💡 小提示</strong>
+            <p class="m-0">
+              GitHub README 额外提醒：如果你本机残留特别早期的 0.1.x
+              版本，建议先卸载旧版本再安装新版，避免命令路径冲突。
+            </p>
+          </div>
+
+          <h2>3. 第一次启动：连接模型</h2>
+          <p>
+            安装完成后先运行 <code>opencode</code> 进入 TUI，然后执行
+            <code>/connect</code>。
+          </p>
+          <pre><code class="language-bash">opencode
+/connect</code></pre>
+          <ol class="list-decimal pl-6 mb-6 space-y-3 text-slate-700">
+            <li>
+              在列表中选择提供商，例如 OpenCode
+              Zen、DeepSeek、OpenAI、Anthropic。
+            </li>
+            <li>按提示登录或粘贴 API Key。</li>
+            <li>连接成功后执行 <code>/models</code> 查看当前可用模型。</li>
+            <li>选择一个默认模型，开始你的第一轮对话。</li>
+          </ol>
+
+          <p>
+            这里要特别注意：新版 OpenCode 已经把 <code>/models</code>
+            作为选择模型的重要入口。很多旧教程只讲“填完 Key
+            就好了”，但实际上最好立刻确认当前默认模型是否正确。
+          </p>
+
+          <h2>4. 初始化你的项目</h2>
+          <p>连接好模型后，进入你想操作的代码仓库：</p>
+          <pre><code class="language-bash">cd /path/to/project
 opencode
 /init</code></pre>
           <p>
-            该命令会让 OpenCode 扫描你的项目结构，并生成
-            <code>AGENTS.md</code>。这对于它理解你的代码至关重要，<strong
-              >请务必将此文件加入 Git 版本控制。</strong
-            >
+            <code>/init</code> 会分析项目并在根目录生成 <code>AGENTS.md</code>。
+            这是 OpenCode 理解项目结构、编码规范和团队约束的关键入口，建议提交到
+            Git。
           </p>
+
+          <h2>5. 第一次高质量提问</h2>
+          <p>
+            OpenCode
+            最擅长的不是“随便生成一段代码”，而是根据上下文直接执行任务。你可以从下面两类提问开始：
+          </p>
+
+          <h3>直接修改</h3>
+          <pre><code class="language-text">给 @src/settings.ts 增加登录校验。
+参考 @src/notes.ts 里已有的权限处理逻辑，
+改完后运行测试并告诉我结果。</code></pre>
+
+          <h3>先规划再执行</h3>
+          <pre><code class="language-text">先切到 plan agent。
+我想给后台增加“最近删除”页面。
+请先给我一个分步骤的实现计划，
+确认后我再让你开始改代码。</code></pre>
+
+          <p>
+            在 TUI 里按 <span class="kbd">Tab</span> 可以在
+            <strong>build agent</strong> 和 <strong>plan agent</strong>
+            之间切换。build 负责真正修改文件，plan 负责只读分析和规划。
+          </p>
+
+          <h2>6. 常见坑位</h2>
+          <ul class="list-disc pl-6 mb-6 space-y-3 text-slate-700">
+            <li>
+              <strong>只安装，不连模型</strong>：装完命令只是第一步，没有 Key
+              或订阅依然无法干活。
+            </li>
+            <li>
+              <strong>没有执行 `/models`</strong>：连接 provider
+              后，如果默认模型不合适，体验会明显下降。
+            </li>
+            <li>
+              <strong>跳过 `/init`</strong>：项目级上下文不足时，OpenCode
+              更容易给出泛化建议。
+            </li>
+            <li>
+              <strong>Windows 终端体验差</strong>：原生可用，但复杂项目通常还是
+              WSL 更稳。
+            </li>
+          </ul>
 
           <div class="mt-12 flex justify-between items-center">
             <a
               href="intro.html"
               class="text-indigo-600 font-semibold hover:underline"
             >
-              <i class="fas fa-arrow-left mr-2"></i> 上一步：启航
+              <i class="fas fa-arrow-left mr-2"></i> 上一步：什么是 OpenCode？
             </a>
             <a
-              href="usage.html"
+              href="china-guide.html"
               class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
             >
-              下一步：实战技巧 <i class="fas fa-arrow-right ml-2"></i>
+              下一步：国内用户指南 <i class="fas fa-arrow-right ml-2"></i>
             </a>
           </div>
         </article>

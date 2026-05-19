@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>常见问题 FAQ - OpenCode 中文指南</title>
+    <meta
+      name="description"
+      content="OpenCode 中文 FAQ，集中解答安装失败、/connect、/models、配置不生效、插件、commands、MCP、plan/build agent 等高频问题。"
+    />
+    <meta
+      name="keywords"
+      content="OpenCode FAQ, OpenCode常见问题, OpenCode配置不生效, /connect, /models, MCP, commands"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="OpenCode 中文指南" />
+    <meta name="theme-color" content="#4f46e5" />
+    <link rel="canonical" href="https://opencode.it.com/guide/docs/faq.html" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="OpenCode 中文指南" />
+    <meta property="og:title" content="常见问题 FAQ - OpenCode 中文指南" />
+    <meta
+      property="og:description"
+      content="OpenCode 中文 FAQ，集中解答安装失败、/connect、/models、配置不生效、插件、commands、MCP、plan/build agent 等高频问题。"
+    />
+    <meta property="og:url" content="https://opencode.it.com/guide/docs/faq.html" />
+    <meta
+      property="og:image"
+      content="https://opencode.it.com/guide/pics/1.3_1.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="常见问题 FAQ - OpenCode 中文指南" />
+    <meta
+      name="twitter:description"
+      content="OpenCode 中文 FAQ，集中解答安装失败、/connect、/models、配置不生效、插件、commands、MCP、plan/build agent 等高频问题。"
+    />
+    <meta
+      name="twitter:image"
+      content="https://opencode.it.com/guide/pics/1.3_1.png"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../assets/custom.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "OpenCode 安装完成后为什么还是不能直接使用？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "因为安装命令只是第一步。你还需要运行 opencode，使用 /connect 连接 provider，并通过 /models 确认可用模型，否则 OpenCode 只是装好了客户端，还没有真正接上可用的大模型。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "配置文件为什么明明改了却没生效？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "OpenCode 的配置是多层合并的，不是简单替换。常见来源包括远程配置、全局配置、项目配置、.opencode 目录以及环境变量覆盖。最稳妥的排查方式是运行 opencode debug config 查看最终生效结果。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "应该先学 plugins、commands 还是 MCP？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "大多数用户更适合先学 commands，再学 plugins，最后再接入 MCP。commands 最容易把重复 Prompt 变成团队资产；plugins 适合做安全、通知和自定义工具；MCP 更适合连接浏览器、数据库或项目管理系统。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "新手应该默认用 build 还是 plan agent？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "新手更建议先多用 plan agent，让 OpenCode 先分析和规划，再切到 build agent 执行。这样可以降低误改风险，也更容易理解 OpenCode 在做什么。"
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body class="bg-white">
+    <div
+      class="md:hidden bg-slate-50 border-b border-slate-200 p-4 flex justify-between items-center"
+    >
+      <a href="../index.html" class="font-bold text-indigo-600"
+        >OpenCode Guide</a
+      >
+      <button
+        id="menuBtn"
+        class="p-2 text-slate-600 hover:bg-slate-200 rounded"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <div class="flex min-h-screen">
+      <aside
+        id="sidebar"
+        class="w-64 border-r border-slate-200 bg-slate-50 fixed inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 md:relative transition-transform duration-300"
+      >
+        <div class="p-6 sticky top-0 h-screen overflow-y-auto">
+          <a
+            href="../index.html"
+            class="text-xl font-bold text-indigo-600 mb-8 block"
+            >OpenCode Guide</a
+          >
+          <nav class="space-y-2">
+            <a href="intro.html" class="sidebar-link">1. 什么是 OpenCode？</a>
+            <a href="install.html" class="sidebar-link">2. 安装指南</a>
+            <a href="china-guide.html" class="sidebar-link"
+              >3. 国内特供版 <span class="tag">Hot</span></a
+            >
+            <a href="migration.html" class="sidebar-link">4. 从 Cursor 迁移</a>
+            <a href="configuration.html" class="sidebar-link">5. 详细配置</a>
+            <a href="workflows.html" class="sidebar-link">6. 实战工作流</a>
+            <a href="usage.html" class="sidebar-link">7. 常用技巧</a>
+            <a href="advanced.html" class="sidebar-link">8. 高级技巧</a>
+            <a href="faq.html" class="sidebar-link active"
+              >9. 常见问题 FAQ <span class="tag">New</span></a
+            >
+          </nav>
+        </div>
+      </aside>
+
+      <main class="flex-1 px-4 py-12 md:px-12 lg:px-24">
+        <article class="prose max-w-4xl mx-auto">
+          <h1 class="text-4xl font-extrabold text-slate-900 mb-8">
+            第九章：常见问题 FAQ
+          </h1>
+
+          <p class="text-lg">
+            这一页专门回答用户最常搜、最容易卡住的问题。你可以把它当成“快速排障入口”，也可以把它发给刚开始接触
+            OpenCode 的同事。
+          </p>
+
+          <div class="tip-box">
+            <strong>💡 最实用的排查顺序</strong>
+            <p class="m-0">
+              先看 <code>/models</code>，再看配置优先级，最后看
+              <code>opencode debug config</code> 和插件 / MCP 是否真的加载成功。
+            </p>
+          </div>
+
+          <h2>1. 安装与启动</h2>
+
+          <h3>Q1：安装完成后，为什么还不能直接开始干活？</h3>
+          <p>
+            因为安装只是把 OpenCode 客户端装到了本机。真正开始使用前，你还需要：
+          </p>
+          <ul class="list-disc pl-6 mb-6 space-y-3 text-slate-700">
+            <li>运行 <code>opencode</code> 进入 TUI。</li>
+            <li>执行 <code>/connect</code> 连接 provider。</li>
+            <li>执行 <code>/models</code> 确认当前可用模型。</li>
+            <li>进入项目后运行 <code>/init</code> 生成 <code>AGENTS.md</code>。</li>
+          </ul>
+
+          <h3>Q2：Windows 用户最容易踩什么坑？</h3>
+          <p>
+            最大的坑通常不是“不能装”，而是“体验不稳定”。复杂项目通常还是建议优先使用
+            WSL。桌面端如果出现空白页或无法启动，还要优先排查 WebView2
+            运行时是否缺失。
+          </p>
+
+          <h3>Q3：Linux 下为什么复制粘贴不顺？</h3>
+          <p>
+            很多时候是系统层剪贴板工具没装好。常见方向是给 X11 装
+            <code>xclip</code>，或给 Wayland 装 <code>wl-clipboard</code>。
+          </p>
+
+          <h2>2. 模型与连接</h2>
+
+          <h3>Q4：为什么我明明配置了 provider，却还是找不到模型？</h3>
+          <p>
+            因为“配置写上了”不等于“这个 provider 当前真的暴露了该模型”。最稳妥的方式是：
+          </p>
+          <pre><code class="language-bash">opencode
+/models</code></pre>
+          <p>
+            先以 OpenCode 实际显示的模型列表为准，不要只靠博客里抄来的模型名。
+          </p>
+
+          <h3>Q5：国内用户应该先接哪个 provider？</h3>
+          <p>
+            如果你想省心，优先试官方内置路线；如果你更在意成本与访问速度，通常会优先考虑
+            DeepSeek、Qwen 或企业自己的 OpenAI 兼容网关。
+          </p>
+
+          <h3>Q6：本地模型路线适合所有人吗？</h3>
+          <p>
+            不适合。Ollama、本地兼容服务更适合内网、隐私优先或原型验证场景。它们在“能否稳定完成工具调用、长链路修改和复杂工程分析”上，和顶级云模型仍有明显差异。
+          </p>
+
+          <h2>3. 配置与排错</h2>
+
+          <h3>Q7：为什么我的配置明明写了，却没有按预期生效？</h3>
+          <p>
+            因为 OpenCode 的配置是<strong>合并</strong>而不是替换。常见配置来源包括：
+          </p>
+          <ul class="list-disc pl-6 mb-6 space-y-3 text-slate-700">
+            <li>远程配置</li>
+            <li>全局配置</li>
+            <li>自定义配置路径或环境变量覆盖</li>
+            <li>项目根目录的 <code>opencode.json</code></li>
+            <li><code>.opencode</code> 目录</li>
+          </ul>
+          <p>最好直接运行：</p>
+          <pre><code class="language-bash">opencode debug config</code></pre>
+
+          <h3>Q8：全局配置和项目配置应该怎么分工？</h3>
+          <p>
+            最简单的经验是：
+          </p>
+          <ul class="list-disc pl-6 mb-6 space-y-3 text-slate-700">
+            <li>全局配置放个人偏好，例如主题、默认模型、个人插件。</li>
+            <li>项目配置放团队共识，例如默认 agent、watcher ignore、MCP、instructions。</li>
+            <li>
+              <code>AGENTS.md</code> 放项目背景、风格要求、工作约束，不要什么都往
+              JSON 里塞。
+            </li>
+          </ul>
+
+          <h3>Q9：为什么项目越来越卡？</h3>
+          <p>
+            先别急着怪模型。更常见的原因其实是：
+          </p>
+          <ul class="list-disc pl-6 mb-6 space-y-3 text-slate-700">
+            <li>没有配置 <code>watcher.ignore</code></li>
+            <li>接了太多插件或 MCP</li>
+            <li>上下文过长，长期不整理任务</li>
+            <li>把所有规则都写成超长 Prompt</li>
+          </ul>
+
+          <h2>4. 插件、命令与扩展</h2>
+
+          <h3>Q10：我应该先学 plugins、commands 还是 MCP？</h3>
+          <p>
+            推荐顺序通常是：
+            <strong>commands → plugins → MCP</strong>。
+          </p>
+          <ul class="list-disc pl-6 mb-6 space-y-3 text-slate-700">
+            <li>commands 最容易上手，适合沉淀重复 Prompt。</li>
+            <li>plugins 适合做安全、通知、环境注入和自定义工具。</li>
+            <li>MCP 更适合连接外部系统，例如浏览器、数据库、Jira。</li>
+          </ul>
+
+          <h3>Q11：插件写在本地目录和通过 npm 装，有什么区别？</h3>
+          <p>
+            本地插件适合项目私有逻辑和快速试验；npm 插件适合复用、共享和版本管理。OpenCode
+            支持两种方式并存，但要记得插件的加载顺序会影响最终覆盖效果。
+          </p>
+
+          <h3>Q12：最值得先做的 command 是什么？</h3>
+          <ul class="list-disc pl-6 mb-6 space-y-3 text-slate-700">
+            <li><code>/test</code>：跑测试并总结失败原因。</li>
+            <li><code>/review-changes</code>：基于最近 diff 做评审。</li>
+            <li><code>/ship-check</code>：发布前检查关键风险。</li>
+          </ul>
+
+          <h2>5. Agent 使用习惯</h2>
+
+          <h3>Q13：新手默认应该用 build 还是 plan agent？</h3>
+          <p>
+            新手更建议先多用 <strong>plan agent</strong>。先让它分析、拆计划、指出风险，再切到
+            <strong>build agent</strong> 执行。这样更安全，也更容易建立对 OpenCode
+            的正确预期。
+          </p>
+
+          <h3>Q14：什么时候需要自定义 agent？</h3>
+          <p>
+            当你发现自己总在重复同一类工作，例如代码评审、写文档、排障分析，就很适合拆成专用 agent。这样你可以给不同 agent 不同模型、不同权限和不同 Prompt。
+          </p>
+
+          <h2>6. 最后一个建议</h2>
+          <p>
+            OpenCode 真正的门槛，不是“安装命令会不会敲”，而是你能不能把它从一个聊天工具，变成一个可复用、可协作、可约束的工作流系统。
+          </p>
+
+          <div class="mt-12 flex justify-between items-center">
+            <a
+              href="advanced.html"
+              class="text-indigo-600 font-semibold hover:underline"
+            >
+              <i class="fas fa-arrow-left mr-2"></i> 上一步：高级技巧
+            </a>
+            <a
+              href="../index.html"
+              class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-bold"
+            >
+              返回首页
+            </a>
+          </div>
+        </article>
+      </main>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="../assets/main.js"></script>
+  </body>
+</html>

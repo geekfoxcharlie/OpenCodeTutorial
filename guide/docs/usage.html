@@ -4,6 +4,53 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>实战技巧：Plan 与 Build - OpenCode 中文指南</title>
+    <meta
+      name="description"
+      content="OpenCode 常用技巧与命令速查，掌握 plan agent、build agent、@ 文件引用、/undo、/redo 和 /models。"
+    />
+    <meta
+      name="keywords"
+      content="OpenCode技巧, plan agent, build agent, /undo, /redo, /models"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="OpenCode 中文指南" />
+    <meta name="theme-color" content="#4f46e5" />
+    <link
+      rel="canonical"
+      href="https://opencode.it.com/guide/docs/usage.html"
+    />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="OpenCode 中文指南" />
+    <meta
+      property="og:title"
+      content="实战技巧：Plan 与 Build - OpenCode 中文指南"
+    />
+    <meta
+      property="og:description"
+      content="OpenCode 常用技巧与命令速查，掌握 plan agent、build agent、@ 文件引用、/undo、/redo 和 /models。"
+    />
+    <meta
+      property="og:url"
+      content="https://opencode.it.com/guide/docs/usage.html"
+    />
+    <meta
+      property="og:image"
+      content="https://opencode.it.com/guide/pics/7.1_1.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="实战技巧：Plan 与 Build - OpenCode 中文指南"
+    />
+    <meta
+      name="twitter:description"
+      content="OpenCode 常用技巧与命令速查，掌握 plan agent、build agent、@ 文件引用、/undo、/redo 和 /models。"
+    />
+    <meta
+      name="twitter:image"
+      content="https://opencode.it.com/guide/pics/7.1_1.png"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
@@ -54,6 +101,9 @@
             <a href="workflows.html" class="sidebar-link">6. 实战工作流</a>
             <a href="usage.html" class="sidebar-link active">7. 常用技巧</a>
             <a href="advanced.html" class="sidebar-link">8. 高级技巧</a>
+            <a href="faq.html" class="sidebar-link"
+              >9. 常见问题 FAQ <span class="tag">New</span></a
+            >
           </nav>
         </div>
       </aside>
@@ -72,7 +122,7 @@
 
           <h2>1. 核心工作流：先思考，后执行</h2>
           <p>
-            OpenCode 提供两种模式，通过
+            OpenCode 提供两个内置 agent，通过
             <span class="kbd">Tab</span> 键快速切换：
           </p>
           <div class="grid md:grid-cols-2 gap-4 my-8">
@@ -82,7 +132,7 @@
                 alt="Plan Mode"
                 class="rounded border border-slate-200 shadow-sm mb-2"
               />
-              <span class="text-xs text-slate-500">Plan Mode (思考模式)</span>
+              <span class="text-xs text-slate-500">plan agent (只读规划)</span>
             </div>
             <div class="text-center">
               <img
@@ -90,23 +140,23 @@
                 alt="Build Mode"
                 class="rounded border border-slate-200 shadow-sm mb-2"
               />
-              <span class="text-xs text-slate-500">Build Mode (执行模式)</span>
+              <span class="text-xs text-slate-500">build agent (默认执行)</span>
             </div>
           </div>
           <ul class="list-disc pl-6 mb-6 space-y-4">
             <li>
-              <strong>Plan 模式</strong> (建议优先使用)：在此模式下，OpenCode
+              <strong>plan agent</strong> (建议优先使用)：在此模式下，OpenCode
               无法修改文件。它会分析你的需求，给出一份详尽的执行计划。你可以对计划提出质疑、修改细节，直到满意。
             </li>
             <li>
-              <strong>Build 模式</strong>：在此模式下，OpenCode
+              <strong>build agent</strong>：在此模式下，OpenCode
               会获得文件写入权限，开始真正地修改代码、运行命令。
             </li>
           </ul>
           <div class="bg-amber-50 border-l-4 border-amber-500 p-4 my-6">
-            <strong>技巧：</strong> 对于大型功能，先在 Plan
-            模式下讨论清楚。一旦达成一致，切换到 Build 模式并说：“Sounds good!
-            Go ahead.”
+            <strong>技巧：</strong> 对于大型功能，先在 plan agent
+            下讨论清楚。一旦达成一致，切换到 build agent 并说：“Sounds good! Go
+            ahead.”
           </div>
 
           <h2>2. 精准提供上下文 (@ 符号)</h2>
@@ -162,9 +212,21 @@
                 </tr>
                 <tr>
                   <td class="px-4 py-2 border-b font-mono text-indigo-600">
+                    /models
+                  </td>
+                  <td class="px-4 py-2 border-b">查看并切换当前可用模型</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-2 border-b font-mono text-indigo-600">
                     /undo
                   </td>
                   <td class="px-4 py-2 border-b">撤销上一次代码变更</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-2 border-b font-mono text-indigo-600">
+                    /redo
+                  </td>
+                  <td class="px-4 py-2 border-b">重做刚刚撤销的修改</td>
                 </tr>
                 <tr>
                   <td class="px-4 py-2 border-b font-mono text-indigo-600">

@@ -4,6 +4,47 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>中国大陆使用指南 - OpenCode 中文指南</title>
+    <meta
+      name="description"
+      content="中国大陆用户使用 OpenCode 的专项指南，覆盖 DeepSeek、Qwen、OpenAI 兼容网关、本地模型和网络环境建议。"
+    />
+    <meta
+      name="keywords"
+      content="OpenCode国内使用, DeepSeek配置, Qwen配置, OpenCode中国大陆, OpenCode网关"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="OpenCode 中文指南" />
+    <meta name="theme-color" content="#4f46e5" />
+    <link
+      rel="canonical"
+      href="https://opencode.it.com/guide/docs/china-guide.html"
+    />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="OpenCode 中文指南" />
+    <meta property="og:title" content="中国大陆使用指南 - OpenCode 中文指南" />
+    <meta
+      property="og:description"
+      content="中国大陆用户使用 OpenCode 的专项指南，覆盖 DeepSeek、Qwen、OpenAI 兼容网关、本地模型和网络环境建议。"
+    />
+    <meta
+      property="og:url"
+      content="https://opencode.it.com/guide/docs/china-guide.html"
+    />
+    <meta
+      property="og:image"
+      content="https://opencode.it.com/guide/pics/1.3_1.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="中国大陆使用指南 - OpenCode 中文指南" />
+    <meta
+      name="twitter:description"
+      content="中国大陆用户使用 OpenCode 的专项指南，覆盖 DeepSeek、Qwen、OpenAI 兼容网关、本地模型和网络环境建议。"
+    />
+    <meta
+      name="twitter:image"
+      content="https://opencode.it.com/guide/pics/1.3_1.png"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
@@ -22,7 +63,6 @@
     </style>
   </head>
   <body class="bg-white">
-    <!-- Mobile Header -->
     <div
       class="md:hidden bg-slate-50 border-b border-slate-200 p-4 flex justify-between items-center"
     >
@@ -38,7 +78,6 @@
     </div>
 
     <div class="flex min-h-screen">
-      <!-- Sidebar -->
       <aside
         id="sidebar"
         class="w-64 border-r border-slate-200 bg-slate-50 fixed inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 md:relative transition-transform duration-300"
@@ -60,155 +99,178 @@
             <a href="workflows.html" class="sidebar-link">6. 实战工作流</a>
             <a href="usage.html" class="sidebar-link">7. 常用技巧</a>
             <a href="advanced.html" class="sidebar-link">8. 高级技巧</a>
+            <a href="faq.html" class="sidebar-link"
+              >9. 常见问题 FAQ <span class="tag">New</span></a
+            >
           </nav>
         </div>
       </aside>
 
-      <!-- Main Content -->
       <main class="flex-1 px-4 py-12 md:px-12 lg:px-24">
         <article class="prose max-w-4xl mx-auto">
           <h1 class="text-4xl font-extrabold text-slate-900 mb-6">
             第三章：中国大陆使用指南
           </h1>
           <p class="text-lg text-slate-600 mb-8">
-            🚀 针对国内网络环境、支付方式和模型选择优化的专项指南。
+            这一章不再依赖大量旧版手写 JSON 模板，而是优先采用 2026
+            年官方推荐路线：
+            <strong>优先用内置 provider + `/connect` + `/models`</strong
+            >，只有在需要企业网关、中转层或本地模型时，再补充配置文件。
           </p>
 
           <div
             class="bg-indigo-50 border-l-4 border-indigo-500 p-6 my-8 rounded-r-lg"
           >
-            <h4 class="font-bold text-indigo-800 mb-2">💡 核心优势</h4>
+            <h4 class="font-bold text-indigo-800 mb-2">💡 一句话建议</h4>
             <p class="text-indigo-900 m-0">
-              国内用户使用 OpenCode
-              的核心优势在于：<strong>你可以随意切换到国产模型</strong>（DeepSeek,
-              通义千问,
-              智谱）。这不仅意味着更低的成本，更意味着极致的访问速度和稳定性。
+              对大多数国内用户来说，最省心的选择是：<strong
+                >先用 DeepSeek 或 Qwen 这类内置 provider</strong
+              >，等你熟悉 OpenCode 之后，再考虑本地 Ollama 或企业中转网关。
             </p>
           </div>
 
-          <h2>1. 网络问题排查</h2>
-          <p>如果你在安装或更新时遇到网络超时或证书错误，试试以下方案：</p>
+          <h2>1. 国内用户的四条路线</h2>
+          <div class="grid md:grid-cols-2 gap-4 my-6">
+            <div class="p-5 border border-green-200 bg-green-50 rounded-xl">
+              <h3 class="font-bold text-green-800 mb-2">路线 A：最省心</h3>
+              <p class="text-sm text-green-900 m-0">
+                直接使用 OpenCode
+                Zen，优点是接入最顺、官方测试覆盖最好，适合第一次上手。
+              </p>
+            </div>
+            <div class="p-5 border border-blue-200 bg-blue-50 rounded-xl">
+              <h3 class="font-bold text-blue-800 mb-2">路线 B：高性价比</h3>
+              <p class="text-sm text-blue-900 m-0">
+                通过 `/connect` 接入 DeepSeek，成本更低，国内访问也更稳定。
+              </p>
+            </div>
+            <div class="p-5 border border-purple-200 bg-purple-50 rounded-xl">
+              <h3 class="font-bold text-purple-800 mb-2">路线 C：生态兼容</h3>
+              <p class="text-sm text-purple-900 m-0">
+                用 Qwen、Moonshot、MiniMax 等国内
+                provider，尤其适合已经有现成账号体系的团队。
+              </p>
+            </div>
+            <div class="p-5 border border-slate-200 bg-slate-50 rounded-xl">
+              <h3 class="font-bold text-slate-800 mb-2">
+                路线 D：私有化 / 本地
+              </h3>
+              <p class="text-sm text-slate-700 m-0">
+                使用 Ollama、LM Studio 或其他本地 OpenAI
+                兼容服务，优先解决隐私和内网问题。
+              </p>
+            </div>
+          </div>
 
-          <h3>安装时的网络问题</h3>
-          <pre><code class="language-bash"># 方案 A：使用国内镜像源安装 Node.js (如果你用 npm 安装)
-npm install -g opencode-ai --registry=https://registry.npmmirror.com
-
-# 方案 B：使用 Docker (如果网络连接受限)
-docker run -it --rm ghcr.io/anomalyco/opencode</code></pre>
-
-          <h3>API 调用的网络问题</h3>
-          <p>如果调用 OpenAI/Anthropic 官方 API 失败，你有两个选择：</p>
-          <ul class="list-disc pl-6 mb-6 space-y-2">
+          <h2>2. 推荐接法：先用 `/connect`，不要先抄旧配置</h2>
+          <p>官方 provider 目录已经内置了很多服务商。你可以直接这样操作：</p>
+          <pre><code class="language-bash">opencode
+/connect
+/models</code></pre>
+          <ol class="list-decimal pl-6 mb-6 space-y-3 text-slate-700">
             <li>
-              <strong>方案一：使用国内中转 API</strong>（推荐）<br />购买
-              OpenAI/Claude 的中转 Key，价格通常比官方贵 20-50%，但稳定性好。
+              运行 <code>/connect</code>，搜索 DeepSeek、Qwen、Moonshot
+              等服务商。
+            </li>
+            <li>输入对应 API Key 或按网页授权。</li>
+            <li>
+              再执行 <code>/models</code>，看当前 provider 真正支持哪些模型。
             </li>
             <li>
-              <strong>方案二：切换到国产大模型</strong
-              >（性价比最高）<br />直接使用 DeepSeek
-              或通义千问，不仅免费，而且速度快。
+              确认满意后，再决定是否把默认模型写入 <code>opencode.json</code>。
+            </li>
+          </ol>
+          <p>
+            这样做的好处是：你不用提前猜模型 ID，也不会被旧文章里已经失效的 JSON
+            模板误导。
+          </p>
+
+          <h2>3. 需要走中转或企业网关时怎么配？</h2>
+          <p>
+            如果你公司统一走 OpenAI 兼容接口，或者你手里拿的是某个代理平台提供的
+            key，可以用 <code>baseURL</code> 覆盖默认地址。
+          </p>
+          <pre><code class="language-json">{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "openai": {
+      "options": {
+        "baseURL": "https://your-gateway.example.com/v1"
+      }
+    }
+  }
+}</code></pre>
+          <p>
+            这里最关键的一点不是 JSON 本身，而是：<strong
+              >模型 ID 必须和你的网关真实暴露出来的模型一致</strong
+            >。最稳妥的验证方式仍然是回到 OpenCode 里执行 <code>/models</code>。
+          </p>
+
+          <h2>4. 本地模型路线</h2>
+          <p>
+            如果你所在团队不能把代码发到公网，或者你只想在内网做原型验证，本地模型是更现实的方案。
+          </p>
+          <ul class="list-disc pl-6 mb-6 space-y-3 text-slate-700">
+            <li>
+              <strong>Ollama</strong>：适合本机或局域网运行的 OpenAI 兼容接口。
+            </li>
+            <li>
+              <strong>LM Studio / 其他本地服务</strong
+              >：适合桌面化调试和快速切换模型。
+            </li>
+            <li>
+              <strong>注意点</strong
+              >：本地模型能不能胜任工具调用、长链路修改和大工程分析，往往比“能不能聊天”更重要。
             </li>
           </ul>
 
-          <h2>2. 国产模型配置实战</h2>
-
-          <h3>DeepSeek (目前最推荐)</h3>
-          <p>
-            DeepSeek Coder 在编程任务上的表现已经非常接近 Claude 3.5，且 API
-            极其便宜。
-          </p>
-          <pre><code class="language-json">{
-  "providers": {
-    "deepseek": {
-      "id": "openai",
-      "args": {
-        "baseUrl": "https://api.deepseek.com/v1",
-        "apiKey": "sk-your-api-key",
-        "models": {
-          "default": { "id": "deepseek-coder" }
-        }
-      }
-    }
-  },
-  "models": {
-    "default": "deepseek/default"
-  }
-}</code></pre>
-
-          <h3>通义千问 (阿里云)</h3>
-          <p>如果你有阿里云账号，可以使用 DashScope 模型。</p>
-          <pre><code class="language-json">{
-  "providers": {
-    "aliyun": {
-      "id": "openai",
-      "args": {
-        "baseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1",
-        "apiKey": "sk-your-dashscope-key",
-        "models": {
-          "qwen-turbo": { "id": "qwen-turbo" },
-          "qwen-plus": { "id": "qwen-plus" }
-        }
-      }
-    }
-  }
-}</code></pre>
-
-          <h3>智谱 AI (ChatGLM)</h3>
-          <pre><code class="language-json">{
-  "providers": {
-    "zhipu": {
-      "id": "openai",
-      "args": {
-        "baseUrl": "https://open.bigmodel.cn/api/paas/v4",
-        "apiKey": "your-zhipu-api-key",
-        "models": {
-          "glm-4": { "id": "glm-4" }
-        }
-      }
-    }
-  }
-}</code></pre>
-
-          <h2>3. 支付与账户问题</h2>
-          <div
-            class="bg-yellow-50 border-l-4 border-yellow-500 p-6 my-8 rounded-r-lg"
-          >
-            <h4 class="font-bold text-yellow-800 mb-2">⚠️ 关于 OpenCode Zen</h4>
-            <p class="text-yellow-900 m-0">
-              OpenCode Zen (官方提供的模型服务)
-              目前对国内用户最不友好，因为它需要海外信用卡。如果你没有外币卡，请务必参考上面的“国产模型配置”，直接配置第三方
-              API。
-            </p>
-          </div>
-
-          <h2>4. 推荐组合 (2025-2026)</h2>
-          <p>经过社区实测，以下组合在国内体验最好：</p>
+          <h2>5. 2026 年国内用户推荐组合</h2>
           <div class="grid md:grid-cols-3 gap-4 my-6">
             <div class="p-4 border border-green-200 bg-green-50 rounded-lg">
-              <h4 class="font-bold text-green-800 mb-2">💰 省钱组合</h4>
+              <h4 class="font-bold text-green-800 mb-2">入门组合</h4>
               <ul class="text-sm text-green-900 space-y-1">
-                <li>主力：DeepSeek Coder</li>
-                <li>兜底：通义千问 Qwen-Turbo</li>
-                <li>月成本：≈ ¥50</li>
+                <li>Provider：OpenCode Zen</li>
+                <li>特点：最省心</li>
+                <li>适合：第一次上手</li>
               </ul>
             </div>
             <div class="p-4 border border-indigo-200 bg-indigo-50 rounded-lg">
-              <h4 class="font-bold text-indigo-800 mb-2">⚡ 速度组合</h4>
+              <h4 class="font-bold text-indigo-800 mb-2">均衡组合</h4>
               <ul class="text-sm text-indigo-900 space-y-1">
-                <li>主力：通义千问 Qwen-Plus</li>
-                <li>特点：延迟极低</li>
-                <li>适用：日常小改动</li>
+                <li>Provider：DeepSeek / Qwen</li>
+                <li>特点：成本更友好</li>
+                <li>适合：日常开发主力</li>
               </ul>
             </div>
             <div class="p-4 border border-purple-200 bg-purple-50 rounded-lg">
-              <h4 class="font-bold text-purple-800 mb-2">🧠 质量组合</h4>
+              <h4 class="font-bold text-purple-800 mb-2">私有化组合</h4>
               <ul class="text-sm text-purple-900 space-y-1">
-                <li>主力：Claude 3.5 (需中转)</li>
-                <li>适用：复杂重构</li>
-                <li>成本：较高</li>
+                <li>Provider：Ollama / 本地兼容服务</li>
+                <li>特点：隐私优先</li>
+                <li>适合：内网或敏感项目</li>
               </ul>
             </div>
           </div>
+
+          <h2>6. 常见问题排查</h2>
+          <ul class="list-disc pl-6 mb-6 space-y-3 text-slate-700">
+            <li>
+              <strong>Windows 可不可以原生装？</strong> 可以，但官方依旧推荐 WSL
+              作为更稳定的体验。
+            </li>
+            <li>
+              <strong>一定要海外信用卡吗？</strong>
+              不一定。你完全可以直接接入国内 provider 或本地模型。
+            </li>
+            <li>
+              <strong>网络正常但模型不可用？</strong> 先跑
+              <code>/models</code> 看 provider 当前实际暴露了什么模型。
+            </li>
+            <li>
+              <strong>配置越来越乱？</strong> 用
+              <code>opencode debug config</code> 看最终合并后的真实配置。
+            </li>
+          </ul>
 
           <div class="mt-12 flex justify-between items-center">
             <a

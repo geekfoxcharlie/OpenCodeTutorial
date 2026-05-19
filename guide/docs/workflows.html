@@ -4,6 +4,47 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>实战工作流 - OpenCode 中文指南</title>
+    <meta
+      name="description"
+      content="OpenCode 实战工作流示例，包含重构、测试、排查 Bug 等典型场景，帮助你学会更高质量地提问。"
+    />
+    <meta
+      name="keywords"
+      content="OpenCode工作流, OpenCode实战, AI编程工作流, Prompt范例"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="OpenCode 中文指南" />
+    <meta name="theme-color" content="#4f46e5" />
+    <link
+      rel="canonical"
+      href="https://opencode.it.com/guide/docs/workflows.html"
+    />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="OpenCode 中文指南" />
+    <meta property="og:title" content="实战工作流 - OpenCode 中文指南" />
+    <meta
+      property="og:description"
+      content="OpenCode 实战工作流示例，包含重构、测试、排查 Bug 等典型场景，帮助你学会更高质量地提问。"
+    />
+    <meta
+      property="og:url"
+      content="https://opencode.it.com/guide/docs/workflows.html"
+    />
+    <meta
+      property="og:image"
+      content="https://opencode.it.com/guide/pics/6.1_1.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="实战工作流 - OpenCode 中文指南" />
+    <meta
+      name="twitter:description"
+      content="OpenCode 实战工作流示例，包含重构、测试、排查 Bug 等典型场景，帮助你学会更高质量地提问。"
+    />
+    <meta
+      name="twitter:image"
+      content="https://opencode.it.com/guide/pics/6.1_1.png"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
@@ -56,6 +97,9 @@
             >
             <a href="usage.html" class="sidebar-link">7. 常用技巧</a>
             <a href="advanced.html" class="sidebar-link">8. 高级技巧</a>
+            <a href="faq.html" class="sidebar-link"
+              >9. 常见问题 FAQ <span class="tag">New</span></a
+            >
           </nav>
         </div>
       </aside>
@@ -179,6 +223,45 @@ export default BigLegacyTable;</code></pre>
               请分析原因，并修复这个问题。修复时请加一个非空判断守卫。
             </p>
           </div>
+
+          <h2>场景四：排查“为什么配置没生效？”</h2>
+          <p>
+            这是很多新手真正最常遇到的问题。比起继续猜，不如让 OpenCode
+            直接帮你检查配置优先级和最终结果。
+          </p>
+          <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 mb-4">
+            <p class="font-bold text-indigo-600 mb-2">User Prompt:</p>
+            <p class="font-mono text-sm text-slate-700">
+              @opencode.json @.opencode/agents @AGENTS.md<br />
+              我修改了项目配置，但效果和预期不一致。<br />
+              请先帮我分析可能是哪些配置源在互相覆盖。<br />
+              如果需要，请告诉我应该运行什么命令验证。<br />
+              优先检查 model、permission、plugin 和 mcp 配置。
+            </p>
+          </div>
+          <p>
+            这类问题很适合先让它做只读分析，然后你再手动执行
+            <code>opencode debug config</code> 验证。
+          </p>
+
+          <h2>场景五：给团队创建一个自定义命令</h2>
+          <p>
+            很多团队会反复做同一件事，比如“评审最近改动”“发布前检查”“跑测试并总结失败原因”。这时最适合让
+            OpenCode 帮你创建 command。
+          </p>
+          <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 mb-4">
+            <p class="font-bold text-indigo-600 mb-2">User Prompt:</p>
+            <p class="font-mono text-sm text-slate-700">
+              请帮我在 .opencode/commands/ 下创建一个 review-changes.md。<br />
+              目标：输入 /review-changes 后，自动读取最近 10 条 git log，<br />
+              再生成一份代码评审意见，重点关注风险、回归和缺少测试的地方。<br />
+              默认使用 plan agent。
+            </p>
+          </div>
+          <p>
+            这个场景非常适合新手，因为它能把“今天学会的一次
+            Prompt”沉淀成“以后每天都能复用的命令”。
+          </p>
 
           <div class="mt-12 flex justify-between items-center">
             <a
